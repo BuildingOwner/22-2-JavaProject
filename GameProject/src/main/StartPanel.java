@@ -1,29 +1,62 @@
 package main;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class StartPanel extends JPanel{
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class StartPanel extends JPanel {
 	private JLabel title;
-	private JButton[] button = new JButton[3];
-	
-	public StartPanel() {
-		title = new JLabel("∞›≈ı ∞‘¿”");
-		title.setBounds(390, 100, 230, 100);
-		Font font = new Font("",Font.BOLD, 50);
-		title.setFont(font);
-		
-		button[0] = new JButton("ªı ∞‘¿”");
-		button[0].setBounds(425, 330, 150, 50);
-		button[1] = new JButton("¿ÃæÓ «œ±‚");
-		button[1].setBounds(425, 430, 150, 50);
-		button[2] = new JButton("µµøÚ∏ª");
-		button[2].setBounds(425, 530, 150, 50);
-		
+	public JButton[] button = new JButton[3];
+	public GameFrame gameF;
+
+	public StartPanel(GameFrame gameF) {
 		this.setLayout(null);
+
+		this.gameF = gameF;
+
+		title = new JLabel("Í≤©Ìà¨ Í≤åÏûÑ");
+		title.setBounds(390, 100, 230, 100);
+		Font font = new Font("", Font.BOLD, 50);
+		title.setFont(font);
+
+		button[0] = new JButton("ÏÉà Í≤åÏûÑ");
+		button[0].setBounds(425, 330, 150, 50);
+		button[1] = new JButton("Ïù¥Ïñ¥ ÌïòÍ∏∞");
+		button[1].setBounds(425, 430, 150, 50);
+		button[2] = new JButton("ÎèÑÏõÄÎßê");
+		button[2].setBounds(425, 530, 150, 50);
+
+		SPBtnAction btn = new SPBtnAction();
 		this.add(title);
-		for(int i=0; i<3; i++) {
+		for (int i = 0; i < 3; i++) {
+			button[i].addActionListener(btn);
 			this.add(button[i]);
 		}
+
 	}
+
+	class SPBtnAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton btn = (JButton) e.getSource();
+			if (btn.getText().equals("ÎèÑÏõÄÎßê")) {
+				gameF.getContentPane().removeAll();
+				gameF.add(gameF.helpP);
+			} 
+			else if (btn.getText().equals("Ïù¥Ïñ¥ ÌïòÍ∏∞")) {
+				gameF.getContentPane().removeAll();
+				gameF.add(gameF.saveP);
+			}
+			gameF.revalidate();
+			gameF.repaint();
+
+		}
+
+	}
+
 }

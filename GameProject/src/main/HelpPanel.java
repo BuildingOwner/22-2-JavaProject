@@ -28,7 +28,7 @@ public class HelpPanel extends JPanel {
 		discript.setBounds(300, 150, 300, 300);
 
 		home = new JButton("홈으로 돌아가기");
-		home.setBounds(400, 600, 200, 50);
+		home.setBounds(750, 600, 200, 50);
 		HPBtnAction btn = new HPBtnAction();
 		home.addActionListener(btn);
 

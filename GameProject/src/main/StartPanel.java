@@ -47,10 +47,17 @@ public class StartPanel extends JPanel {
 			if (btn.getText().equals("도움말")) {
 				gameF.getContentPane().removeAll();
 				gameF.add(gameF.helpP);
-			} 
-			else if (btn.getText().equals("이어 하기")) {
+			} else if (btn.getText().equals("이어 하기")) {
 				gameF.getContentPane().removeAll();
 				gameF.add(gameF.saveP);
+			} else {
+				gameF.getContentPane().removeAll();
+				gameF.add(gameF.gameP);
+				Item[] items = new Item[4];
+				for (int i = 0; i < 4; i++) {
+					items[i] = new Item();
+				}
+				gameF.run(null, items);
 			}
 			gameF.revalidate();
 			gameF.repaint();

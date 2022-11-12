@@ -10,4 +10,6 @@ public class Item {
 		this.name = name;
 		this.level = level;
 	}
+	
+	public Item() {}
 }

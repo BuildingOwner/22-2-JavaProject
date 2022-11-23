@@ -102,22 +102,25 @@ public class SavePanel extends JPanel {
     }
 
     class SaveBtnAction implements ActionListener {
+        private Modal alert;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton btn = (JButton) e.getSource();
             for (int i = 0; i < 3; i++) {
                 if (btn.getName().charAt(3) == (char) (i + 1 + '0')) {
-                    gameF.getContentPane().removeAll();
-                    gameF.add(gameF.gameP);
-                    gameF.run(userName[i], items[i]);
-                    gameF.revalidate();
-                    gameF.repaint();
+                    if (userName[i] == null) {
+                        alert = new Modal(gameF, "저장된 파일이 없습니다.");
+                        alert.setVisible(true);
+                    } else {
+                        gameF.getContentPane().removeAll();
+                        gameF.add(gameF.gameP);
+                        gameF.run(userName[i], items[i]);
+                        gameF.revalidate();
+                        gameF.repaint();
+                    }
                 }
             }
-
         }
-
     }
-
 }

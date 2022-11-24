@@ -40,8 +40,7 @@ public class SavePanel extends JPanel {
         for (int i = 0; i < 3; i++) {
             JPanel tp = new JPanel();
             try {
-                Scanner sc = new Scanner(new BufferedReader(new FileReader("GameProject/SaveFiles/SaveFile" + i + ".txt")));
-                // 이클립스에선 파일경로를 ./SaveFiles/SaveFile로 해야함
+                Scanner sc = new Scanner(new BufferedReader(new FileReader("./SaveFiles/SaveFile" + i + ".txt")));
                 if (!sc.hasNext()) {
                     throw new IOException();
                 }

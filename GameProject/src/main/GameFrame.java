@@ -22,7 +22,7 @@ public class GameFrame extends JFrame {
         startP = new StartPanel(this);
         helpP = new HelpPanel(this);
         saveP = new SavePanel(this);
-        gameP = new GamePanel();
+        gameP = new GamePanel(this);
 
         this.add(startP);
         this.setVisible(true);

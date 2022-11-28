@@ -18,5 +18,4 @@ public class Player extends GameObject {
 	public void attack(GameObject m) {
 		m.hp = m.hp - Math.round((this.damage * (100 - m.armor) / 100.0) * 100) / 100;
 	}
-
 }

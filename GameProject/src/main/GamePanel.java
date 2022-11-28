@@ -79,12 +79,12 @@ public class GamePanel extends JPanel {
 		infoDraw(g);
 		healthDraw(g);
 		monsterDraw(g);
-		playerDraw(g);
+		playerDraw(g, 400, 350);
 		itemDraw(g);
 	}
 	
-	public void playerDraw(Graphics g) { // 플레이어 현재 이미지를 받아서 그림
-		g.drawImage(playerAct, 400, 350 , 200, 350, this);
+	public void playerDraw(Graphics g , int x, int y) { // 플레이어 현재 이미지를 받아서 그림 ?그래픽에 뭐가 들어가야 하는 지 모르겠음
+		g.drawImage(playerAct, x, y , 200, 350, this);
 	}
 	
 	public void monsterDraw(Graphics g) { // 몬스터 현재 이미지를 받아서 그림

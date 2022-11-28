@@ -45,22 +45,20 @@ public class StartPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			if (btn.getText().equals("도움말")) {
-				gameF.getContentPane().removeAll();
-				gameF.add(gameF.helpP);
+				gameF.redraw(gameF.helpP);
 			} else if (btn.getText().equals("이어 하기")) {
-				gameF.getContentPane().removeAll();
-				gameF.add(gameF.saveP);
+				gameF.redraw(gameF.saveP);
 			} else {
-				gameF.getContentPane().removeAll();
-				gameF.add(gameF.gameP);
+				gameF.nameP = new InputName(gameF);
+	            gameF.redraw(gameF.nameP);
+	            String userName = gameF.nameP.getName();
 				Item[] items = new Item[4];
 				for (int i = 0; i < 4; i++) {
 					items[i] = new Item();
 				}
-				gameF.run(null, items);
+				gameF.run(userName, items);
 			}
-			gameF.revalidate();
-			gameF.repaint();
+
 
 		}
 

@@ -13,7 +13,7 @@ public class GameFrame extends JFrame {
     public HelpPanel helpP;
     public SavePanel saveP;
     public GamePanel gameP;
-    public UserNamePanel nameP;
+    public InputName nameP;
 
     public GameFrame() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -22,28 +22,20 @@ public class GameFrame extends JFrame {
         startP = new StartPanel(this);
         helpP = new HelpPanel(this);
         saveP = new SavePanel(this);
-        gameP = new GamePanel();
+       
 
         this.add(startP);
         this.setVisible(true);
     }
 
     public void run(String userName, Item[] items) {
-        if (userName == null) {
-            // 이름 생성 화면 호출
-            nameP = new UserNamePanel(this);
-            this.getContentPane().removeAll();
-            this.add(nameP);
-            this.revalidate();
-            this.repaint();
-            userName = nameP.getName();
-        }
-
 
         Player p = new Player(100, 1, 0, userName, items);
         Monster m = null;
         m = createMonster();
-
+        
+        gameP = new GamePanel(p, m);
+        redraw(gameP);
         // 스래드로 몬스터의 공격과 플레이어의 공격, 게임 프레임의 게임 진행을 스레드로 구현 해야 함
     }
 
@@ -56,6 +48,14 @@ public class GameFrame extends JFrame {
         }
         return m;
     }
+    
+    public void redraw(JPanel p) {
+    	this.getContentPane().removeAll();
+        this.add(p);
+        this.revalidate();
+        this.repaint();
+    }
+   
 
     public static void main(String[] args) {
         GameFrame game = new GameFrame();

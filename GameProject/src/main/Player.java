@@ -1,10 +1,13 @@
 package main;
 
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class Player extends GameObject {
 	Item[] items = new Item[4];
+	Image[] images = new Image[4];
 
 	public Player(int hp, int damage, int armor, String name, Item[] items) {
 		super(hp, damage, armor, name);

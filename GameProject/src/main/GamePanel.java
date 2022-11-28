@@ -37,37 +37,38 @@ public class GamePanel extends JPanel {
 			new ImageIcon("images/playerBasic.png").getImage(),
 			new ImageIcon("images/A_Armour02.png").getImage(),
 			new ImageIcon("images/playerAttacked.png").getImage(),
-			new ImageIcon("images/playerAttack.png").getImage(),
+			new ImageIcon("images/playerAttack.png").getImage()
 	};
 	private Image[] monster = { // [0]은 기본, [1]은 방어, [2]는 피격, [3] 이상부터는 공격 패턴 이미지
 			new ImageIcon("images/monsterBasic.png").getImage(),
 			new ImageIcon("images/monsterBasic.png").getImage(),
 			new ImageIcon("images/A_Armour03.png").getImage(),
-			new ImageIcon("images/monsterAttack.png").getImage(),
+			new ImageIcon("images/monsterAttack.png").getImage()
 	};
-	private Image[] item = { // 게임 내 존재하는 아이템 이미지
-			new ImageIcon("images/A_Armour01.png").getImage(),
-			new ImageIcon("images/A_Armour01.png").getImage(),
-			new ImageIcon("images/A_Armour01.png").getImage(),
-			new ImageIcon("images/A_Armour01.png").getImage(),
-			new ImageIcon("images/A_Armour01.png").getImage(),
-	};
+//	private Image[] item = { // 게임 내 존재하는 아이템 이미지
+//			new ImageIcon("images/A_Armour01.png").getImage(),
+//			new ImageIcon("images/A_Armour01.png").getImage(),
+//			new ImageIcon("images/A_Armour01.png").getImage(),
+//			new ImageIcon("images/A_Armour01.png").getImage()
+//	};
 	private Image[] screenImage = { // 배경으로 쓰일 이미지
 			new ImageIcon("images/stage1map.png").getImage(),
 			new ImageIcon("images/stage2map.jpg").getImage(),
-			new ImageIcon("images/stage3map.jpg").getImage(),
+			new ImageIcon("images/stage3map.jpg").getImage()
 	};
 	Image mapImage = screenImage[0]; // 현재 맵 이미지
 	Image playerAct = player[0]; // 플레이어 현재 이미지
 	Image monsterAct = monster[0]; // 몬스터 현재 
-	Image[] playerItem = { // 플레이어 현재 소지 아이템 이미지
-			item[0], item[1], item[2], item[3]
-	};
+	Image[] playerItem = new Image[4];
 	public GameFrame gameF;
 	
-	public GamePanel(GameFrame gameF) {
+	public GamePanel(GameFrame gameF, String name, Item[] items) {
 		this.setLayout(null);
 		this.gameF = gameF;
+		this.playerName = name;
+		for(int i=0; i<4; i++) {
+			this.playerItem[i] = new ImageIcon("images/" + items[i].name + ".png").getImage();
+		}
 	
 	}
 	

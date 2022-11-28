@@ -50,15 +50,9 @@ public class StartPanel extends JPanel {
 				gameF.redraw(gameF.saveP);
 			} else {
 				gameF.nameP = new InputName(gameF);
-	            gameF.redraw(gameF.nameP);
-	            String userName = gameF.nameP.getName();
-				Item[] items = new Item[4];
-				for (int i = 0; i < 4; i++) {
-					items[i] = new Item();
-				}
-				gameF.run(userName, items);
-			}
+				gameF.redraw(gameF.nameP);
 
+			}
 
 		}
 

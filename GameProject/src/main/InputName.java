@@ -5,14 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserNamePanel extends JPanel {
+public class InputName extends JPanel {
     private  JLabel title;
     JButton submitBtn;
     JTextField nameField;
     GameFrame gameF;
     String name;
 
-    UserNamePanel(GameFrame gameF) {
+    InputName(GameFrame gameF) {
         this.setLayout(null);
         this.gameF = gameF;
 

@@ -112,11 +112,7 @@ public class SavePanel extends JPanel {
                         alert = new Modal(gameF, "저장된 파일이 없습니다.");
                         alert.setVisible(true);
                     } else {
-                        gameF.getContentPane().removeAll();
-                        gameF.add(gameF.gameP);
                         gameF.run(userName[i], items[i]);
-                        gameF.revalidate();
-                        gameF.repaint();
                     }
                 }
             }

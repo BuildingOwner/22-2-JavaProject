@@ -1,4 +1,4 @@
 유저1
-테스트 1
-테스트 2
-테스트 3
+A_Armour01 1
+A_Armour02 2
+A_Armour03 3

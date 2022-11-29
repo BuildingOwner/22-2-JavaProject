@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
@@ -14,7 +15,11 @@ public class GameFrame extends JFrame {
 	public SavePanel saveP;
 	public GamePanel gameP;
 	public InputName nameP;
+	public GameFrame gameF = this;
 	Player player;
+	Monster monster;
+	
+	public TestGamePanel tgp;
 
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,17 +33,20 @@ public class GameFrame extends JFrame {
 		this.setVisible(true);
 	}
 
-	public void run(String userName, Item[] items) {
+	public void game(String userName, Item[] items) {
 
 		Player p = new Player(100, 1, 0, userName, items);
 		player = p;
-		Monster m = null;
-		m = createMonster();
+		Monster m = createMonster();
+		monster = m;
 
-		gameP = new GamePanel(this, userName, items);
-		redraw(gameP);
+		tgp = new TestGamePanel(p, m, items);
+		redraw(tgp);
 		// 스래드로 몬스터의 공격과 플레이어의 공격, 게임 프레임의 게임 진행을 스레드로 구현 해야 함
 		this.addKeyListener(new MyKeyEvent());
+		this.setFocusable(true);
+		this.requestFocus();
+		
 	}
 
 	private Monster createMonster() {
@@ -62,8 +70,16 @@ public class GameFrame extends JFrame {
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
-			case KeyEvent.VK_UP:
-				gameP.playerDraw(getGraphics(), , keyCode);
+			case 'A':
+				AttackPlayer a = new AttackPlayer(player, monster, gameF);
+				a.start();
+				break;
+			case KeyEvent.VK_LEFT:
+				player.nowImage.setLocation(player.nowImage.getX()-20, player.nowImage.getY());
+				break;
+			case KeyEvent.VK_RIGHT:
+				player.nowImage.setLocation(player.nowImage.getX()+20, player.nowImage.getY());
+				break;
 			}
 		}
 	}

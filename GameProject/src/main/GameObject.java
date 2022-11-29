@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Image;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
@@ -10,11 +11,10 @@ public abstract class GameObject {
 	int damage; // 평타 데미지
 	int armor;
 	Point position;
-	int status = 0; // 0이면 일반, 1이면 가드
 	String name;
-	ImageIcon image;
-	JLabel obj;
-
+	ImageIcon[] setImage = new ImageIcon[4]; 
+	JLabel[] images = new JLabel[4]; // 0:기본, 1:공격, 2:피격, 3:없음
+	JLabel nowImage;
 	public GameObject(int hp, int damage, int armor, String name) {
 		this.hp = hp;
 		this.damage = damage;
@@ -22,10 +22,4 @@ public abstract class GameObject {
 		this.name = name;
 	}
 
-	public abstract void attack(GameObject m);
-	
-
-	public void guard() {
-		this.status = 1;
-	}
 }

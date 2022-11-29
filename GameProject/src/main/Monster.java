@@ -7,7 +7,6 @@ public class Monster extends GameObject {
 		super(hp, damage, armor, name);
 	}
 
-	@Override
 	public void attack(GameObject m) {
 		int d = this.damage;
 		d *= paturn;

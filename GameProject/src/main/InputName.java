@@ -62,7 +62,7 @@ public class InputName extends JPanel {
 					for (int i = 0; i < 4; i++) {
 						items[i] = new Item();
 					}
-					gameF.run(userName, items);
+					gameF.game(userName, items);
 
 				}
 			}

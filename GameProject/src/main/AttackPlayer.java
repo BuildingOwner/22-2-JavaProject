@@ -17,7 +17,7 @@ public class AttackPlayer extends Thread {
 		// 공격이 연타가 가능함 공속을 낮추는법 연구 필요
 		gf.tgp.repaint();
 		try {
-			Thread.sleep(300);
+			Thread.sleep(100);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}

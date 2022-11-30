@@ -39,6 +39,7 @@ public class TestGamePanel extends JPanel {
 		mapImage.setSize(1000, 700);
 		
 		this.add(p.nowImage);
+//		this.add(m.nowImage);
 		this.add(mapImage);
 	}
 	

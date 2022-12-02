@@ -25,7 +25,6 @@ public class TestMonster extends Monster {
 
 	@Override
 	void attack() {
-		// TODO Auto-generated method stub
 		
 	}
 

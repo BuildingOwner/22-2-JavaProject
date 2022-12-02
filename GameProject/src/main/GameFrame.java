@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
@@ -59,12 +60,16 @@ public class GameFrame extends JFrame {
 				fc.pMotion = 1;
 			}
 			if (fc.pSync % 20 == 0) { // 공격 속도
-				player.attack = 0;
+				player.attack = false;
 				fc.pSync += 1;
 			}
 			if (fc.mMotion % 5 == 0) { // 피격 모션
 				monster.nowImage.setIcon(monster.setImage[0]);
 				fc.mMotion = 1;
+			}
+			
+			if(fc.mSync%30==0) {
+				tgp.repaint();
 			}
 		}
 	}

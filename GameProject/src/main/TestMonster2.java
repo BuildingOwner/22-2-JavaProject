@@ -5,10 +5,10 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class TestMonster extends Monster {
+public class TestMonster2 extends Monster {
 	
 
-	public TestMonster(int hp, int damage, int armor, String name) {
+	public TestMonster2(int hp, int damage, int armor, String name) {
 		super(hp, damage, armor, name);
 		this.setImage[0] = new ImageIcon("images/monster1Basic.png");
 		this.setImage[1] = new ImageIcon("images/monster1Attack.png");

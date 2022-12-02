@@ -5,14 +5,14 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class TestMonster extends Monster {
+public class TestMonster3 extends Monster {
 	
 
-	public TestMonster(int hp, int damage, int armor, String name) {
+	public TestMonster3(int hp, int damage, int armor, String name) {
 		super(hp, damage, armor, name);
-		this.setImage[0] = new ImageIcon("images/monster1Basic.png");
-		this.setImage[1] = new ImageIcon("images/monster1Attack.png");
-		this.setImage[2] = new ImageIcon("images/monster1Attacked.png");
+		this.setImage[0] = new ImageIcon("images/monster2Basic.png");
+		this.setImage[1] = new ImageIcon("images/monster2Attack.png");
+		this.setImage[2] = new ImageIcon("images/monster2Attacked.png");
 		for (int i = 0; i < 3; i++) {
 			Image tmp = this.setImage[i].getImage();
 			Image tmp2 = tmp.getScaledInstance(260, 260, Image.SCALE_SMOOTH);

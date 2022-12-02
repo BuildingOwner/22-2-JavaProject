@@ -55,7 +55,7 @@ public class TestGamePanel extends JPanel {
 		g.drawRect(20, 20, 350, 40); // Player 최대 체력 칸
 		g.fillRect(20, 20, (int) (350 * (p.hp / 100)), 40); // Player 남은 체력 칸
 		g.drawRect(615, 20, 350, 40); // Monster 최대 체력 칸
-		g.fillRect(615, 20, (int) (350 * (m.hp / 100)), 40); // Monster 남은 체력 칸
+		g.fillRect(615 + (350 - (int)(350*(m.hp/100))), 20, (int)(350*(m.hp/100)), 40); // Monster 남은 체력 칸
 		// 위에 이거 왼쪽에서부터 없어지는 법 연구 필요
 	}
 
@@ -72,7 +72,7 @@ public class TestGamePanel extends JPanel {
 		g.setFont(new Font("", Font.BOLD, 20));
 		g.drawString(stage, 450, 50);
 		g.drawString(playerName, 20, 80);
-		g.drawString(monsterName, 905, 80); // 절대 위치 말고 왼쪽정렬 필요
+		g.drawString(monsterName, 965-(monsterName.length()*10), 80); // 절대 위치 말고 왼쪽정렬 필요
 
 	}
 

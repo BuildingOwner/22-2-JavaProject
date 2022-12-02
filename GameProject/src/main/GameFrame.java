@@ -15,6 +15,7 @@ public class GameFrame extends JFrame {
 	public SavePanel saveP;
 	public GamePanel gameP;
 	public InputName nameP;
+	public Audio punch = new Audio("audio/punch.wav",false); 
 
 	Player player;
 	Monster monster;
@@ -34,7 +35,6 @@ public class GameFrame extends JFrame {
 	}
 
 	public void game(String userName, Item[] items) {
-
 		player = new Player(this, 100, 1, 0, userName, items);
 		monster = createMonster();
 
@@ -97,6 +97,7 @@ public class GameFrame extends JFrame {
 			switch (keyCode) {
 			case 'A':
 				player.attack();
+				punch.start();
 				fc.pMotion++;
 				fc.mMotion++;
 

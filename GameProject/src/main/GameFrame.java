@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
@@ -58,28 +57,44 @@ public class GameFrame extends JFrame {
 			if (fc.pMotion % 10 == 0) { // 공격 모션
 				player.nowImage.setIcon(player.setImage[0]);
 				fc.pMotion = 1;
+
+			}
+			if (fc.pMotion % 5 == 0) {
+				monster.nowImage.setIcon(monster.setImage[0]);
 			}
 			if (fc.pSync % 20 == 0) { // 공격 속도
 				player.attack = false;
 				fc.pSync += 1;
 			}
-			if (fc.mMotion % 5 == 0) { // 피격 모션
-				monster.nowImage.setIcon(monster.setImage[0]);
-				fc.mMotion = 1;
+
+			// 몬스터 공격, 
+			if (fc.mSync % 30 == 0) {
+				monster.attack();
+				fc.mMotion = 2;
+				fc.mSync++;
 			}
-			
-			if(fc.mSync%30==0) {
-				tgp.repaint();
+			if (fc.mMotion % 10 == 0) {
+				monster.warning.setIcon(monster.color[1]);
 			}
 		}
 	}
 
 	private Monster createMonster() {
 		Monster m = null;
-		int i = (int) Math.random() + 1;
+		int i = (int) (Math.random() * 4 + 1);
 		switch (i) { // 몬스터들 수 만큼 늘어나야 함
 		case 1:
-			m = new TestMonster(100, 1, 0, "test monster"); // 각자 몬스터 클래스 들어갈 예정
+			m = new TestMonster(100, 1, 0, "test monster");
+			break;
+		case 2:
+			m = new TestMonster2(100, 1, 0, "test monster2");
+			break;
+		case 3:
+			m = new TestMonster3(100, 1, 0, "test monster3");
+			break;
+		case 4:
+			m = new TestMonster4(100, 1, 0, "test monster4");
+			break;
 		}
 		return m;
 	}
@@ -91,7 +106,7 @@ public class GameFrame extends JFrame {
 		this.repaint();
 	}
 
-	class MyKeyEvent extends KeyAdapter {
+	class MyKeyEvent extends KeyAdapter { // 동시 입력 시 끊김 동시입력 연구 필요
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
@@ -99,7 +114,6 @@ public class GameFrame extends JFrame {
 				player.attack();
 				punch.start();
 				fc.pMotion++;
-				fc.mMotion++;
 
 				break;
 			case KeyEvent.VK_LEFT:

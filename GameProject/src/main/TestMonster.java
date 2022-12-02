@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class TestMonster extends Monster {
-	
 
 	public TestMonster(int hp, int damage, int armor, String name) {
 		super(hp, damage, armor, name);
@@ -25,7 +24,10 @@ public class TestMonster extends Monster {
 
 	@Override
 	void attack() {
-		
+		int t = (int) (Math.random() * 3 + 1);
+		warningPos(t);
+		warning.setIcon(color[0]);
 	}
+
 
 }

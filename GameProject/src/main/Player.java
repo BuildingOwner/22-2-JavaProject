@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Image;
+import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -8,6 +9,8 @@ import javax.swing.JLabel;
 public class Player extends GameObject {
 	Item[] items = new Item[4];
 	GameFrame gf;
+	
+	Point position;
 
 	public Player(GameFrame gf, int hp, int damage, int armor, String name, Item[] items) {
 		super(hp, damage, armor, name);

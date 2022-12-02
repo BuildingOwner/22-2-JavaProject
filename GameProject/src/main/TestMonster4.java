@@ -25,8 +25,9 @@ public class TestMonster4 extends Monster {
 
 	@Override
 	void attack() {
-		// TODO Auto-generated method stub
-		
+		int t = (int) (Math.random() * 3 + 1);
+		warningPos(t);
+		warning.setIcon(color[0]);
 	}
 
 }

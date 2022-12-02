@@ -38,6 +38,7 @@ public class TestGamePanel extends JPanel {
 
 		this.add(p.nowImage);
 		this.add(m.nowImage);
+		this.add(m.warning);
 		this.add(mapImage);
 	}
 
@@ -48,7 +49,6 @@ public class TestGamePanel extends JPanel {
 		healthDraw(g);
 		itemDraw(g);
 		infoDraw(g);
-//		if(m.)
 	}
 
 	public void healthDraw(Graphics g) { // Player와 Monster의 체력을 받아와야됨.
@@ -75,12 +75,6 @@ public class TestGamePanel extends JPanel {
 		g.drawString(playerName, 20, 80);
 		g.drawString(monsterName, 965-(monsterName.length()*10), 80); // 절대 위치 말고 왼쪽정렬 필요
 
-	}
-
-	public void warning1(Graphics g) {
-		g.setColor(Color.RED);
-		g.drawRect(40, 0, 100, 700);
-		g.fillRect(40, 0, 100, 700);
 	}
 
 }

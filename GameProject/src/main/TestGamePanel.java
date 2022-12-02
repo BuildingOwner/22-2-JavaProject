@@ -48,6 +48,7 @@ public class TestGamePanel extends JPanel {
 		healthDraw(g);
 		itemDraw(g);
 		infoDraw(g);
+//		if(m.)
 	}
 
 	public void healthDraw(Graphics g) { // Player와 Monster의 체력을 받아와야됨.

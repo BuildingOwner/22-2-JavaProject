@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 
 public class Player extends GameObject {
 	Item[] items = new Item[4];
-	int attack = 0;
 	GameFrame gf;
 
 	public Player(GameFrame gf, int hp, int damage, int armor, String name, Item[] items) {
@@ -31,12 +30,12 @@ public class Player extends GameObject {
 
 	@Override
 	void attack() {
-		if (gf.player.attack == 1)
+		if (gf.player.attack)
 			return;
 		gf.player.nowImage.setIcon(gf.player.setImage[1]);
 		gf.monster.hp = gf.monster.hp - Math.round((gf.player.damage * (100 - gf.monster.armor) / 100.0) * 100) / 100;
 		gf.monster.nowImage.setIcon(gf.monster.setImage[2]);
-		gf.player.attack = 1;
+		gf.player.attack = true;
 		gf.tgp.repaint();
 	}
 

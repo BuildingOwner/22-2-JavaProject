@@ -15,6 +15,7 @@ public abstract class GameObject {
 	ImageIcon[] setImage = new ImageIcon[3]; 
 	JLabel[] images = new JLabel[3]; // 0:기본, 1:공격, 2:피격, 3:없음
 	JLabel nowImage;
+	boolean attack = false;
 	
 	public GameObject(int hp, int damage, int armor, String name) {
 		this.hp = hp;

@@ -18,13 +18,13 @@ public class SavePanel extends JPanel {
     public JButton[] saves = new JButton[3];
     public JButton home;
     public Item[][] items = new Item[3][4];
-    public GameFrame gameF;
+    public GameFrame gf;
     public String[] userName = new String[3];
 
     public SavePanel(GameFrame gameF) {
         this.setLayout(null);
 
-        this.gameF = gameF;
+        this.gf = gameF;
 
         title = new JLabel("불러 오기");
         title.setBounds(390, 50, 230, 100);
@@ -90,10 +90,10 @@ public class SavePanel extends JPanel {
             JButton btn = (JButton) e.getSource();
 
             if (btn.getText().equals("홈으로 돌아가기")) {
-                gameF.getContentPane().removeAll();
-                gameF.add(gameF.startP);
-                gameF.revalidate();
-                gameF.repaint();
+                gf.getContentPane().removeAll();
+                gf.add(gf.startP);
+                gf.revalidate();
+                gf.repaint();
             }
 
         }
@@ -109,10 +109,10 @@ public class SavePanel extends JPanel {
             for (int i = 0; i < 3; i++) {
                 if (btn.getName().charAt(3) == (char) (i + 1 + '0')) {
                     if (userName[i] == null) {
-                        alert = new Modal(gameF, "저장된 파일이 없습니다.");
+                        alert = new Modal(gf, "저장된 파일이 없습니다.");
                         alert.setVisible(true);
                     } else {
-                        gameF.game(userName[i], items[i]);
+                        gf.game(userName[i], items[i]);
                     }
                 }
             }

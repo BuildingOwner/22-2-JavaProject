@@ -13,12 +13,12 @@ public class InputName extends JPanel {
 	private JLabel title;
 	JButton submitBtn;
 	JTextField nameField;
-	GameFrame gameF;
+	GameFrame gf;
 	String name;
 
 	InputName(GameFrame gameF) {
 		this.setLayout(null);
-		this.gameF = gameF;
+		this.gf = gameF;
 
 		this.title = new JLabel("이름을 입력하세요");
 		title.setFont(new Font("", Font.PLAIN, 40));
@@ -51,18 +51,18 @@ public class InputName extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == submitBtn) {
 				if (nameField.getText().equals("")) {
-					alert = new Modal(gameF, "이름을 입력해 주셔야 게임이 시작됩니다.");
+					alert = new Modal(gf, "이름을 입력해 주셔야 게임이 시작됩니다.");
 					alert.setVisible(true);
 				}
 
 				else {
 					name = nameField.getText();
-					String userName = gameF.nameP.getName();
+					String userName = gf.nameP.getName();
 					Item[] items = new Item[4];
 					for (int i = 0; i < 4; i++) {
 						items[i] = new Item();
 					}
-					gameF.game(userName, items);
+					gf.game(userName, items);
 
 				}
 			}

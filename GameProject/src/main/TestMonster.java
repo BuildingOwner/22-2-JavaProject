@@ -12,16 +12,21 @@ public class TestMonster extends Monster {
 		super(hp, damage, armor, name);
 		this.setImage[0] = new ImageIcon("images/monsterBasic.png");
 		this.setImage[1] = new ImageIcon("images/monsterAttack.png");
-//		this.setImage[2] = new ImageIcon("images/monsterAttacked.png");
-		this.setImage[3] = new ImageIcon("");
-		for (int i = 0; i < 4; i++) {
+		this.setImage[2] = new ImageIcon("images/P_dummy.png");
+		for (int i = 0; i < 3; i++) {
 			Image tmp = this.setImage[i].getImage();
-			Image tmp2 = tmp.getScaledInstance(140, 210, Image.SCALE_SMOOTH);
+			Image tmp2 = tmp.getScaledInstance(270, 300, Image.SCALE_SMOOTH);
 			this.setImage[i] = new ImageIcon(tmp2);
 			this.images[i] = new JLabel(this.setImage[i]);
-			this.images[i].setBounds(430, 50, 140, 210);
+			this.images[i].setBounds(360, 90, 270, 300);
 		}
 		this.nowImage = this.images[0];
+	}
+
+	@Override
+	void attack() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

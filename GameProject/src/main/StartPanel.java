@@ -11,12 +11,12 @@ import javax.swing.JPanel;
 public class StartPanel extends JPanel {
 	private JLabel title;
 	public JButton[] button = new JButton[3];
-	public GameFrame gameF;
+	public GameFrame gf;
 
 	public StartPanel(GameFrame gameF) {
 		this.setLayout(null);
 
-		this.gameF = gameF;
+		this.gf = gameF;
 
 		title = new JLabel("격투 게임");
 		title.setBounds(390, 100, 230, 100);
@@ -45,12 +45,12 @@ public class StartPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			if (btn.getText().equals("도움말")) {
-				gameF.redraw(gameF.helpP);
+				gf.redraw(gf.helpP);
 			} else if (btn.getText().equals("이어 하기")) {
-				gameF.redraw(gameF.saveP);
+				gf.redraw(gf.saveP);
 			} else {
-				gameF.nameP = new InputName(gameF);
-				gameF.redraw(gameF.nameP);
+				gf.nameP = new InputName(gf);
+				gf.redraw(gf.nameP);
 
 			}
 

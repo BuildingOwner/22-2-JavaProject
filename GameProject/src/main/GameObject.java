@@ -12,14 +12,17 @@ public abstract class GameObject {
 	int armor;
 	Point position;
 	String name;
-	ImageIcon[] setImage = new ImageIcon[4]; 
-	JLabel[] images = new JLabel[4]; // 0:기본, 1:공격, 2:피격, 3:없음
+	ImageIcon[] setImage = new ImageIcon[3]; 
+	JLabel[] images = new JLabel[3]; // 0:기본, 1:공격, 2:피격, 3:없음
 	JLabel nowImage;
+	
 	public GameObject(int hp, int damage, int armor, String name) {
 		this.hp = hp;
 		this.damage = damage;
 		this.armor = armor;
 		this.name = name;
 	}
+	
+	abstract void attack();
 
 }

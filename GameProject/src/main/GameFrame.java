@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
@@ -15,11 +14,11 @@ public class GameFrame extends JFrame {
 	public SavePanel saveP;
 	public GamePanel gameP;
 	public InputName nameP;
-	public GameFrame gameF = this;
+
 	Player player;
 	Monster monster;
-	
 	public TestGamePanel tgp;
+	FrameCount fc = new FrameCount();
 
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,18 +34,39 @@ public class GameFrame extends JFrame {
 
 	public void game(String userName, Item[] items) {
 
-		Player p = new Player(100, 1, 0, userName, items);
-		player = p;
-		Monster m = createMonster();
-		monster = m;
+		player = new Player(this, 100, 1, 0, userName, items);
+		monster = createMonster();
 
-		tgp = new TestGamePanel(p, m, items);
+		tgp = new TestGamePanel(player, monster, items);
 		redraw(tgp);
-		// 스래드로 몬스터의 공격과 플레이어의 공격, 게임 프레임의 게임 진행을 스레드로 구현 해야 함
 		this.addKeyListener(new MyKeyEvent());
 		this.setFocusable(true);
 		this.requestFocus();
-		
+
+		fc.start();
+
+	}
+
+	void gameRun() {
+		while (true) {
+
+			System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion,
+					fc.mMotion);
+
+			// 플레이어 기본 공격
+			if (fc.pMotion % 10 == 0) { // 공격 모션
+				player.nowImage.setIcon(player.setImage[0]);
+				fc.pMotion = 1;
+			}
+			if (fc.pSync % 20 == 0) { // 공격 속도
+				player.attack = 0;
+				fc.pSync += 1;
+			}
+			if (fc.mMotion % 5 == 0) { // 피격 모션
+				monster.nowImage.setIcon(monster.setImage[0]);
+				fc.mMotion = 1;
+			}
+		}
 	}
 
 	private Monster createMonster() {
@@ -54,7 +74,7 @@ public class GameFrame extends JFrame {
 		int i = (int) Math.random() + 1;
 		switch (i) { // 몬스터들 수 만큼 늘어나야 함
 		case 1:
-			m = new Monster(100, 1, 0, "test monster"); // 각자 몬스터 클래스 들어갈 예정
+			m = new TestMonster(100, 1, 0, "test monster"); // 각자 몬스터 클래스 들어갈 예정
 		}
 		return m;
 	}
@@ -71,14 +91,20 @@ public class GameFrame extends JFrame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case 'A':
-				AttackPlayer a = new AttackPlayer(player, monster, gameF);
-				a.start();
+				player.attack();
+				fc.pMotion++;
+				fc.mMotion++;
+
 				break;
 			case KeyEvent.VK_LEFT:
-				player.nowImage.setLocation(player.nowImage.getX()-20, player.nowImage.getY());
+				if (player.nowImage.getX() > 200) {
+					player.nowImage.setLocation(player.nowImage.getX() - 20, player.nowImage.getY());
+				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				player.nowImage.setLocation(player.nowImage.getX()+20, player.nowImage.getY());
+				if (player.nowImage.getX() < 700) {
+					player.nowImage.setLocation(player.nowImage.getX() + 20, player.nowImage.getY());
+				}
 				break;
 			}
 		}
@@ -86,6 +112,7 @@ public class GameFrame extends JFrame {
 
 	public static void main(String[] args) {
 		GameFrame game = new GameFrame();
+		game.gameRun();
 
 	}
 }

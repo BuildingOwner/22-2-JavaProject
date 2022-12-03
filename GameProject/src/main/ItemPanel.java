@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -37,11 +39,14 @@ public class ItemPanel extends JPanel {
 //				}
 //			}  아이템의 갯수가 3개 이상일때 가동
 		}
+	
 		for(int i=0; i<choose.length; i++) {
 			JPanel tp = new JPanel();
 			tp.add(new JLabel(ksy[n[i]].name + "  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :" + Integer.toString(ksy[n[i]].remain)));
 			choose[i] = new JButton();
 			choose[i].add(tp);
+			choose[i].setName(Integer.toString(n[i]));
+			choose[i].addActionListener(new ItemBtnAction());
 			choose[i].setBounds(300, 200+i*140, 400, 100);
 			this.add(choose[i]);
 		}
@@ -71,6 +76,20 @@ public class ItemPanel extends JPanel {
 
 		}
 
+	}
+	
+	class ItemBtnAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton btn = (JButton) e.getSource();
+			gf.player.items[gf.player.itemCnt++] = ksy[Integer.parseInt(btn.getName())];
+			gf.monster = gf.createMonster();
+			gf.tgp.repaint();
+			gf.redraw(gf.tgp);
+//			gf.sc.close();
+		}
+		
 	}
 
 }

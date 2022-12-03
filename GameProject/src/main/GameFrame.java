@@ -25,11 +25,11 @@ public class GameFrame extends JFrame {
 	FrameCount fc = new FrameCount();
 
 	int term = 0;
-
+	boolean flag=false; // 0 정지, 1 실행, 2 종료
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBounds(300, 100, 1000, 700);
-
+		player = new Player(this, 100, 1, 0, "");
 		startP = new StartPanel(this);
 		helpP = new HelpPanel(this);
 		saveP = new SavePanel(this);
@@ -40,16 +40,19 @@ public class GameFrame extends JFrame {
 	}
 
 	public void game(String userName, Item[] items) {
-		player = new Player(this, 100, 1, 0, userName, items);
+//		player = new Player(this, 100, 1, 0, userName, items);
+		player.name = userName;
+		player.items = items;
 		monster = createMonster();
 
-		tgp = new TestGamePanel(player, monster, items);
+		tgp = new TestGamePanel(this, items);
 		redraw(tgp);
 		this.addKeyListener(new MyKeyEvent());
 		this.setFocusable(true);
 		this.requestFocus();
-
+		
 		fc.start();
+		
 
 	}
 
@@ -115,19 +118,21 @@ public class GameFrame extends JFrame {
 
 			try {
 				if (monster.hp <= 0) {
-					break;
+					itemP = new ItemPanel(this);
+					redraw(itemP);
+					sc.next();
+//					break;
 				}
 			} catch (NullPointerException e) {
 
 			}
 		}
-
-		itemP = new ItemPanel(this);
-		redraw(itemP);
-
+//		itemP = new ItemPanel(this); 외부에서 화면 전환을 하고 gameRun()을 실행시키면 gameRun은 돌아가는데 화면전환이 안됨
+//		redraw(itemP);
+		
 	}
 
-	private Monster createMonster() {
+	public Monster createMonster() {
 		Monster m = null;
 		int i = (int) (Math.random() * 4 + 1);
 		switch (i) { // 몬스터들 수 만큼 늘어나야 함

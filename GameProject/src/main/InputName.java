@@ -63,7 +63,6 @@ public class InputName extends JPanel {
 						items[i] = new Item();
 					}
 					gf.game(userName, items);
-
 				}
 			}
 		}

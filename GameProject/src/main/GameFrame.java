@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameFrame extends JFrame {
@@ -14,12 +15,15 @@ public class GameFrame extends JFrame {
 	public SavePanel saveP;
 	public GamePanel gameP;
 	public InputName nameP;
-	public Audio punch = new Audio("audio/punch.wav",false); 
+	public Audio punch = new Audio("audio/punch.wav", false);
 
 	Player player;
 	Monster monster;
 	public TestGamePanel tgp;
 	FrameCount fc = new FrameCount();
+	
+	int term = 0;
+
 
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -31,6 +35,9 @@ public class GameFrame extends JFrame {
 
 		this.add(startP);
 		this.setVisible(true);
+		
+		
+		
 	}
 
 	public void game(String userName, Item[] items) {
@@ -44,12 +51,14 @@ public class GameFrame extends JFrame {
 		this.requestFocus();
 
 		fc.start();
-
+		
 	}
 
 	void gameRun() {
 		while (true) {
+			
 
+			
 			System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion,
 					fc.mMotion);
 
@@ -67,14 +76,43 @@ public class GameFrame extends JFrame {
 				fc.pSync += 1;
 			}
 
-			// 몬스터 공격, 
+			// 몬스터 공격,
 			if (fc.mSync % 30 == 0) {
+				monster.nowImage.setIcon(monster.setImage[1]);
 				monster.attack();
 				fc.mMotion = 2;
 				fc.mSync++;
 			}
+			if(fc.mMotion % 5 == 0) {
+				monster.nowImage.setIcon(monster.setImage[0]);
+				player.nowImage.setIcon(player.setImage[0]);
+			}
 			if (fc.mMotion % 10 == 0) {
 				monster.warning.setIcon(monster.color[1]);
+				monster.attack = true;
+				term = fc.frame;
+				fc.mMotion = 1;
+			}
+			try {
+				if (monster.attack) {
+					if (player.lp >= monster.warning.getX() && player.lp <= (monster.warning.getX() + 190)
+							|| player.rp >= (monster.warning.getX() + 10) && player.rp <= (monster.warning.getX() + 200)) {
+						player.nowImage.setIcon(player.setImage[2]);
+						fc.pMotion = 2;
+						int d = monster.damage;
+						d *= monster.paturn;
+						player.hp = player.hp - Math.round((d * (100 - player.armor) / 100.0) * 100) / 100;
+						tgp.repaint();
+						monster.attack = false;
+					}
+					if (fc.frame == (term + 10)) {
+						term = 0;
+						monster.attack = false;
+					}
+
+				}
+			} catch (NullPointerException e) {
+
 			}
 		}
 	}
@@ -119,11 +157,15 @@ public class GameFrame extends JFrame {
 			case KeyEvent.VK_LEFT:
 				if (player.nowImage.getX() > 200) {
 					player.nowImage.setLocation(player.nowImage.getX() - 20, player.nowImage.getY());
+					player.lp = player.nowImage.getX();
+					player.rp = player.nowImage.getX() + 140;
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
 				if (player.nowImage.getX() < 700) {
 					player.nowImage.setLocation(player.nowImage.getX() + 20, player.nowImage.getY());
+					player.lp = player.nowImage.getX();
+					player.rp = player.nowImage.getX() + 140;
 				}
 				break;
 			}

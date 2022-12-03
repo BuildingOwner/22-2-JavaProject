@@ -9,8 +9,9 @@ import javax.swing.JLabel;
 public class Player extends GameObject {
 	Item[] items = new Item[4];
 	GameFrame gf;
-	
-	Point position;
+
+	int lp;
+	int rp;
 
 	public Player(GameFrame gf, int hp, int damage, int armor, String name, Item[] items) {
 		super(hp, damage, armor, name);
@@ -28,7 +29,8 @@ public class Player extends GameObject {
 			this.images[i].setBounds(430, 400, 140, 210);
 		}
 		this.nowImage = this.images[0];
-
+		lp = nowImage.getX();
+		rp = nowImage.getX() + 140;
 	}
 
 	@Override

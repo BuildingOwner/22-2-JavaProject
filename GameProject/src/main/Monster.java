@@ -6,11 +6,11 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public abstract class Monster extends GameObject {
-	public int paturn;
+public class Monster extends GameObject {
+	public int paturn = 1;
 	public JLabel warning;
 	public ImageIcon[] color = new ImageIcon[2];
-
+	
 
 	public Monster(int hp, int damage, int armor, String name) {
 		super(hp, damage, armor, name);
@@ -25,7 +25,12 @@ public abstract class Monster extends GameObject {
 		warning.setBounds(150, 0, 200, 700);
 	}
 
-	abstract void attack();
+	@Override
+	void attack() {
+		int t = (int) (Math.random() * 3 + 1);
+		warningPos(t);
+		warning.setIcon(color[0]);
+	}
 
 	public void warningPos(int n) {
 		switch(n) {

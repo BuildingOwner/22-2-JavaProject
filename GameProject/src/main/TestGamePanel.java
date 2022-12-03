@@ -11,8 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 public class TestGamePanel extends JPanel {
-	Player p;
-	Monster m;
+	GameFrame gf;
 
 	String stage = "1스테이지";
 	String playerName = "나";
@@ -25,22 +24,22 @@ public class TestGamePanel extends JPanel {
 			new ImageIcon("images/stage3map.jpg").getImage() };
 	JLabel mapImage = new JLabel(new ImageIcon(screenImage[0])); // 현재 맵 이미지
 
-	public TestGamePanel(Player player, Monster monster, Item[] items) {
+	public TestGamePanel(GameFrame gf, Item[] items) {
 		this.setLayout(null);
-		this.p = player;
-		this.m = monster;
-		this.playerName = player.name;
-		this.monsterName = monster.name;
+		this.gf = gf;
+		this.playerName = gf.player.name;
+		this.monsterName = gf.monster.name;
 		for (int i = 0; i < 4; i++) {
 			this.playerItem[i] = new ImageIcon("images/" + items[i].name + ".png").getImage();
 		}
 		mapImage.setSize(1000, 700);
 
-		this.add(p.nowImage);
-		this.add(m.nowImage);
-		this.add(m.warning);
+		this.add(gf.player.nowImage);
+		this.add(gf.monster.nowImage);
+		this.add(gf.monster.warning);
 		this.add(mapImage);
 	}
+	
 
 	@Override
 	public void paint(Graphics g) {
@@ -54,9 +53,9 @@ public class TestGamePanel extends JPanel {
 	public void healthDraw(Graphics g) { // Player와 Monster의 체력을 받아와야됨.
 		g.setColor(Color.RED);
 		g.drawRect(20, 20, 350, 40); // Player 최대 체력 칸
-		g.fillRect(20, 20, (int) (350 * (p.hp / 100)), 40); // Player 남은 체력 칸
+		g.fillRect(20, 20, (int) (350 * (gf.player.hp / 100)), 40); // Player 남은 체력 칸
 		g.drawRect(615, 20, 350, 40); // Monster 최대 체력 칸
-		g.fillRect(615 + (350 - (int)(350*(m.hp/100))), 20, (int)(350*(m.hp/100)), 40); // Monster 남은 체력 칸
+		g.fillRect(615 + (350 - (int)(350*(gf.monster.hp/100))), 20, (int)(350*(gf.monster.hp/100)), 40); // Monster 남은 체력 칸
 		// 위에 이거 왼쪽에서부터 없어지는 법 연구 필요
 	}
 

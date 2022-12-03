@@ -8,15 +8,15 @@ import javax.swing.JLabel;
 
 public class Player extends GameObject {
 	Item[] items = new Item[4];
+	int itemCnt=0;
 	GameFrame gf;
 
 	int lp;
 	int rp;
 
-	public Player(GameFrame gf, int hp, int damage, int armor, String name, Item[] items) {
+	public Player(GameFrame gf, int hp, int damage, int armor, String name) {
 		super(hp, damage, armor, name);
 		this.gf = gf;
-		this.items = items;
 
 		this.setImage[0] = new ImageIcon("images/playerBasic.png");
 		this.setImage[1] = new ImageIcon("images/playerAttack.png");

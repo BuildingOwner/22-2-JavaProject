@@ -23,11 +23,4 @@ public class TestMonster4 extends Monster {
 		this.nowImage = this.images[0];
 	}
 
-	@Override
-	void attack() {
-		int t = (int) (Math.random() * 3 + 1);
-		warningPos(t);
-		warning.setIcon(color[0]);
-	}
-
 }

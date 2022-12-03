@@ -15,15 +15,16 @@ public class GameFrame extends JFrame {
 	public SavePanel saveP;
 	public GamePanel gameP;
 	public InputName nameP;
+	public ItemPanel itemP;
+
 	public Audio punch = new Audio("audio/punch.wav", false);
 
 	Player player;
 	Monster monster;
 	public TestGamePanel tgp;
 	FrameCount fc = new FrameCount();
-	
-	int term = 0;
 
+	int term = 0;
 
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,9 +36,7 @@ public class GameFrame extends JFrame {
 
 		this.add(startP);
 		this.setVisible(true);
-		
-		
-		
+
 	}
 
 	public void game(String userName, Item[] items) {
@@ -51,14 +50,11 @@ public class GameFrame extends JFrame {
 		this.requestFocus();
 
 		fc.start();
-		
+
 	}
 
 	void gameRun() {
 		while (true) {
-			
-
-			
 			System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion,
 					fc.mMotion);
 
@@ -66,7 +62,8 @@ public class GameFrame extends JFrame {
 			if (fc.pMotion % 10 == 0) { // 공격 모션
 				player.nowImage.setIcon(player.setImage[0]);
 				fc.pMotion = 1;
-
+				// flag
+				monster.hp = 0;
 			}
 			if (fc.pMotion % 5 == 0) {
 				monster.nowImage.setIcon(monster.setImage[0]);
@@ -83,7 +80,7 @@ public class GameFrame extends JFrame {
 				fc.mMotion = 2;
 				fc.mSync++;
 			}
-			if(fc.mMotion % 5 == 0) {
+			if (fc.mMotion % 5 == 0) {
 				monster.nowImage.setIcon(monster.setImage[0]);
 				player.nowImage.setIcon(player.setImage[0]);
 			}
@@ -96,7 +93,8 @@ public class GameFrame extends JFrame {
 			try {
 				if (monster.attack) {
 					if (player.lp >= monster.warning.getX() && player.lp <= (monster.warning.getX() + 190)
-							|| player.rp >= (monster.warning.getX() + 10) && player.rp <= (monster.warning.getX() + 200)) {
+							|| player.rp >= (monster.warning.getX() + 10)
+									&& player.rp <= (monster.warning.getX() + 200)) {
 						player.nowImage.setIcon(player.setImage[2]);
 						fc.pMotion = 2;
 						int d = monster.damage;
@@ -114,7 +112,19 @@ public class GameFrame extends JFrame {
 			} catch (NullPointerException e) {
 
 			}
+
+			try {
+				if (monster.hp <= 0) {
+					break;
+				}
+			} catch (NullPointerException e) {
+
+			}
 		}
+
+		itemP = new ItemPanel(this);
+		redraw(itemP);
+
 	}
 
 	private Monster createMonster() {

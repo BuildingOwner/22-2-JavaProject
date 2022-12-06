@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 public class Player extends GameObject {
 	Item[] items = new Item[4];
-	int itemCnt=0;
+	int itemCnt = 0;
 	GameFrame gf;
 
 	int lp;
@@ -35,13 +35,17 @@ public class Player extends GameObject {
 
 	@Override
 	void attack() {
-		if (gf.player.attack)
-			return;
+		if (gf.player.attack) {
+			return;	
+		}
 		gf.player.nowImage.setIcon(gf.player.setImage[1]);
 		gf.monster.hp = gf.monster.hp - Math.round((gf.player.damage * (100 - gf.monster.armor) / 100.0) * 100) / 100;
 		gf.monster.nowImage.setIcon(gf.monster.setImage[2]);
 		gf.player.attack = true;
 		gf.tgp.repaint();
+		
+		// flag : 한대만 쳐도 몬스터 죽음
+		gf.monster.hp = 0;
 	}
 
 }

@@ -49,7 +49,6 @@ public class SavePanel extends JPanel {
                 for (int j = 0; j < 4; j++) {
                     try {
                         items[i][j] = new Item(sc.next(), sc.nextInt());
-                        gf.player.itemCnt++;
                         tp.add(new JLabel(items[i][j].name));
                         tp.add(new JLabel(Integer.toString(items[i][j].level)));
                     } catch (NoSuchElementException e) {

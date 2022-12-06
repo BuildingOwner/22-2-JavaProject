@@ -23,38 +23,38 @@ public class ItemPanel extends JPanel {
 		this.setLayout(null);
 		this.gf = gf;
 		initItem();
-		
+
 		title = new JLabel("전리품 획득!");
-		title.setBounds(350, 50, 400, 100);
+		title.setBounds(200, 50, 400, 50);
 		Font font = new Font("", Font.BOLD, 50);
 		title.setFont(font);
 		this.add(title);
-		
-		int[] n = new int[3]; 
-		for(int i=0; i<n.length; i++) {
-			n[i] = (int)(Math.random()*1); // 아이템 수 만큼 늘려야 함
+
+		int[] n = new int[3];
+		for (int i = 0; i < n.length; i++) {
+			n[i] = (int) (Math.random() * 1); // 아이템 수 만큼 늘려야 함
 //			for(int j=0; j<n.length; j++) {
 //				if(n[i] == n[j]) {
 //					i--;
 //				}
 //			}  아이템의 갯수가 3개 이상일때 가동
 		}
-	
-		for(int i=0; i<choose.length; i++) {
+
+		for (int i = 0; i < choose.length; i++) {
 			JPanel tp = new JPanel();
-			tp.add(new JLabel(ksy[n[i]].name + "  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :" + Integer.toString(ksy[n[i]].remain)));
+			tp.add(new JLabel(ksy[n[i]].image.getIcon()));
+			tp.add(new JLabel(ksy[n[i]].name + "  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :"
+					+ Integer.toString(ksy[n[i]].remain)));
 			choose[i] = new JButton();
 			choose[i].add(tp);
 			choose[i].setName(Integer.toString(n[i]));
 			choose[i].addActionListener(new ItemBtnAction());
-			choose[i].setBounds(300, 200+i*140, 400, 100);
+			choose[i].setBounds(140, 150 + i * 140, 400, 100);
 			this.add(choose[i]);
 		}
-		
-		
-		
+
 	}
-	
+
 	public void initItem() {
 		try {
 			Scanner sc = new Scanner(new BufferedReader(new FileReader("./SaveFiles/items.txt")));
@@ -67,6 +67,7 @@ public class ItemPanel extends JPanel {
 					ksy[i].name = sc.next();
 					ksy[i].power = sc.nextInt();
 					ksy[i].remain = sc.nextInt();
+					ksy[i].setImage();
 				} catch (NoSuchElementException e) {
 
 				}
@@ -77,19 +78,26 @@ public class ItemPanel extends JPanel {
 		}
 
 	}
-	
+
 	class ItemBtnAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
+			if (gf.player.itemCnt > 4) {
+				Modal err = new Modal(gf, "아이템이 가득 찼습니다.");
+				gf.itemF.setVisible(false);
+				gf.nextStage();
+				return;
+			}
 			gf.player.items[gf.player.itemCnt++] = ksy[Integer.parseInt(btn.getName())];
-			gf.monster = gf.createMonster();
-			gf.tgp.repaint();
-			gf.redraw(gf.tgp);
-//			gf.sc.close();
+//			gf.redraw(gf.tgp);
+			gf.itemF.setVisible(false);
+			gf.nextStage();
+			gf.flag = true;
+
 		}
-		
+
 	}
 
 }

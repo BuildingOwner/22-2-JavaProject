@@ -16,6 +16,7 @@ public class GameFrame extends JFrame {
 	public GamePanel gameP;
 	public InputName nameP;
 	public ItemPanel itemP;
+	public JFrame itemF = new JFrame();
 
 	public Audio punch = new Audio("audio/punch.wav", false);
 
@@ -25,7 +26,9 @@ public class GameFrame extends JFrame {
 	FrameCount fc = new FrameCount();
 
 	int term = 0;
-	boolean flag=false; // 0 정지, 1 실행, 2 종료
+	int stage = 1;
+	boolean flag = false; // 0 정지, 1 실행, 2 종료
+
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBounds(300, 100, 1000, 700);
@@ -43,93 +46,106 @@ public class GameFrame extends JFrame {
 //		player = new Player(this, 100, 1, 0, userName, items);
 		player.name = userName;
 		player.items = items;
+		for(int i=0; i<player.items.length; i++) {
+			if(player.items[i].name != null) {
+				player.itemCnt++;
+			}
+		}
 		monster = createMonster();
 
 		tgp = new TestGamePanel(this, items);
+		tgp.stage += stage++;
 		redraw(tgp);
 		this.addKeyListener(new MyKeyEvent());
 		this.setFocusable(true);
 		this.requestFocus();
-		
+
 		fc.start();
-		
 
 	}
 
 	void gameRun() {
+		flag = true;
 		while (true) {
-			System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion,
-					fc.mMotion);
+			
+			
+			System.out.println(flag);
+			if (flag) {
+				System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion,
+						fc.mMotion);
 
-			// 플레이어 기본 공격
-			if (fc.pMotion % 10 == 0) { // 공격 모션
-				player.nowImage.setIcon(player.setImage[0]);
-				fc.pMotion = 1;
-				// flag
-				monster.hp = 0;
-			}
-			if (fc.pMotion % 5 == 0) {
-				monster.nowImage.setIcon(monster.setImage[0]);
-			}
-			if (fc.pSync % 20 == 0) { // 공격 속도
-				player.attack = false;
-				fc.pSync += 1;
-			}
+				// 플레이어 기본 공격
+				if (fc.pMotion % 10 == 0) { // 공격 모션
+					player.nowImage.setIcon(player.setImage[0]);
+					fc.pMotion = 1;
+					player.attack = true;
+					
+				}
+				if (fc.pMotion % 5 == 0) {
+					monster.nowImage.setIcon(monster.setImage[0]);
+				}
+				if (fc.pSync % 20 == 0) { // 공격 속도
+					player.attack = false;
+					fc.pSync += 1;
+				}
 
-			// 몬스터 공격,
-			if (fc.mSync % 30 == 0) {
-				monster.nowImage.setIcon(monster.setImage[1]);
-				monster.attack();
-				fc.mMotion = 2;
-				fc.mSync++;
-			}
-			if (fc.mMotion % 5 == 0) {
-				monster.nowImage.setIcon(monster.setImage[0]);
-				player.nowImage.setIcon(player.setImage[0]);
-			}
-			if (fc.mMotion % 10 == 0) {
-				monster.warning.setIcon(monster.color[1]);
-				monster.attack = true;
-				term = fc.frame;
-				fc.mMotion = 1;
-			}
-			try {
-				if (monster.attack) {
-					if (player.lp >= monster.warning.getX() && player.lp <= (monster.warning.getX() + 190)
-							|| player.rp >= (monster.warning.getX() + 10)
-									&& player.rp <= (monster.warning.getX() + 200)) {
-						player.nowImage.setIcon(player.setImage[2]);
-						fc.pMotion = 2;
-						int d = monster.damage;
-						d *= monster.paturn;
-						player.hp = player.hp - Math.round((d * (100 - player.armor) / 100.0) * 100) / 100;
-						tgp.repaint();
-						monster.attack = false;
+				// 몬스터 공격
+				if (fc.mSync % 30 == 0) {
+					monster.nowImage.setIcon(monster.setImage[1]);
+					monster.attack();
+					fc.mMotion = 2;
+					fc.mSync++;
+				}
+				if (fc.mMotion % 5 == 0) {
+					monster.nowImage.setIcon(monster.setImage[0]);
+					player.nowImage.setIcon(player.setImage[0]);
+				}
+				if (fc.mMotion % 10 == 0) {
+					monster.warning.setIcon(monster.color[1]);
+					monster.attack = true;
+					term = fc.frame;
+					fc.mMotion = 1;
+				}
+				try {
+					if (monster.attack) {
+						if (player.lp >= monster.warning.getX() && player.lp <= (monster.warning.getX() + 190)
+								|| player.rp >= (monster.warning.getX() + 10)
+										&& player.rp <= (monster.warning.getX() + 200)) {
+							player.nowImage.setIcon(player.setImage[2]);
+							fc.pMotion = 2;
+							int d = monster.damage;
+							d *= monster.paturn;
+							player.hp = player.hp - Math.round((d * (100 - player.armor) / 100.0) * 100) / 100;
+							tgp.repaint();
+							monster.attack = false;
+						}
+						if (fc.frame == (term + 10)) {
+							term = 0;
+							monster.attack = false;
+						}
+
 					}
-					if (fc.frame == (term + 10)) {
-						term = 0;
-						monster.attack = false;
-					}
+				} catch (NullPointerException e) {
 
 				}
-			} catch (NullPointerException e) {
 
-			}
+				try {
+					if (monster.hp <= 0) {
+						flag = false;
+						fc.interrupt();
+						monster.hp = 100;
+						
+						itemF.setDefaultCloseOperation(EXIT_ON_CLOSE);
+						itemF.setBounds(450, 150, 700, 600);
+						itemP = new ItemPanel(this);
+						itemF.add(itemP);
+						itemF.setVisible(true);
+					}
+				} catch (NullPointerException e) {
 
-			try {
-				if (monster.hp <= 0) {
-					itemP = new ItemPanel(this);
-					redraw(itemP);
-					sc.next();
-//					break;
 				}
-			} catch (NullPointerException e) {
-
 			}
 		}
-//		itemP = new ItemPanel(this); 외부에서 화면 전환을 하고 gameRun()을 실행시키면 gameRun은 돌아가는데 화면전환이 안됨
-//		redraw(itemP);
-		
 	}
 
 	public Monster createMonster() {
@@ -157,6 +173,18 @@ public class GameFrame extends JFrame {
 		this.add(p);
 		this.revalidate();
 		this.repaint();
+	}
+	
+	public void nextStage() {
+		monster = createMonster();
+		tgp = new TestGamePanel(this, player.items);
+		tgp.stage = "스테이지" + stage++;
+		redraw(tgp);
+//		tgp.repaint();
+		fc = new FrameCount();
+		fc.start();
+		player.nowImage.setIcon(player.setImage[0]);
+		flag = true;
 	}
 
 	class MyKeyEvent extends KeyAdapter { // 동시 입력 시 끊김 동시입력 연구 필요

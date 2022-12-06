@@ -13,7 +13,7 @@ import javax.swing.border.LineBorder;
 public class TestGamePanel extends JPanel {
 	GameFrame gf;
 
-	String stage = "1스테이지";
+	String stage = "스테이지";
 	String playerName = "나";
 	String monsterName = "몬스터";
 
@@ -63,7 +63,7 @@ public class TestGamePanel extends JPanel {
 		g.setColor(Color.white);
 		for (int i = 0; i < 4; i++) {
 			g.drawRect(20 + (i * 70), 580, 70, 70);
-			g.drawImage(playerItem[i], 20 + (i * 70), 580, 70, 70, this);
+			g.drawImage(gf.player.items[i].imageItem, 20 + (i * 70), 580, 70, 70, this);
 		}
 	}
 

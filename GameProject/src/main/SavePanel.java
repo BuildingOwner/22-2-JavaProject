@@ -90,10 +90,7 @@ public class SavePanel extends JPanel {
             JButton btn = (JButton) e.getSource();
 
             if (btn.getText().equals("홈으로 돌아가기")) {
-                gf.getContentPane().removeAll();
-                gf.add(gf.startP);
-                gf.revalidate();
-                gf.repaint();
+            	gf.redraw(gf.startP);
             }
 
         }

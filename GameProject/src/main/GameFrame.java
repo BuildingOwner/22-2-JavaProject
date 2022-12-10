@@ -13,7 +13,7 @@ public class GameFrame extends JFrame {
 	public StartPanel startP;
 	public HelpPanel helpP;
 	public SavePanel saveP;
-	public InputName nameP;
+	public InputNamePanel nameP;
 	public ItemPanel itemP;
 	public GamePanel gameP;
 	public JFrame itemF = new JFrame();
@@ -155,8 +155,16 @@ public class GameFrame extends JFrame {
 				} catch (NullPointerException e) {
 
 				}
+				
+				// 게임 클리어
+				if(stage > 3) {
+					break;
+				}
 			}
 		}
+		
+		ClearPanel clearP = new ClearPanel();
+		redraw(clearP);
 	}
 
 	public Monster createMonster() {

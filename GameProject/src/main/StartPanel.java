@@ -49,7 +49,7 @@ public class StartPanel extends JPanel {
 			} else if (btn.getText().equals("이어 하기")) {
 				gf.redraw(gf.saveP);
 			} else {
-				gf.nameP = new InputName(gf);
+				gf.nameP = new InputNamePanel(gf);
 				gf.redraw(gf.nameP);
 
 			}

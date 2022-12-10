@@ -17,6 +17,7 @@ public class GameFrame extends JFrame {
 	public ItemPanel itemP;
 	public GamePanel gameP;
 	public JFrame itemF = new JFrame();
+	public GameFrame gf = this;
 
 	Player player;
 	Monster monster;
@@ -32,7 +33,7 @@ public class GameFrame extends JFrame {
 		player = new Player(this, 100, 1, 0, "");
 		startP = new StartPanel(this);
 		helpP = new HelpPanel(this);
-		saveP = new SavePanel(this);
+		itemP = new ItemPanel(this);
 
 		this.add(startP);
 		this.setVisible(true);
@@ -140,30 +141,30 @@ public class GameFrame extends JFrame {
 					}
 				}
 
-				// 몬스터 사망시 아이템 획득
-				try {
-					if (monster.hp <= 0) {
-						flag = false;
-						fc.interrupt();
-						monster.hp = 100;
-						itemF.setDefaultCloseOperation(EXIT_ON_CLOSE);
-						itemF.setBounds(450, 150, 700, 600);
-						itemP = new ItemPanel(this);
-						itemF.add(itemP);
-						itemF.setVisible(true);
-					}
-				} catch (NullPointerException e) {
-
-				}
-				
 				// 게임 클리어
-				if(stage > 3) {
+				if (stage > 1) {
 					break;
+				} else {
+					// 몬스터 사망시 아이템 획득
+					try {
+						if (monster.hp <= 0) {
+							flag = false;
+							fc.interrupt();
+							monster.hp = 100;
+							itemF.setDefaultCloseOperation(EXIT_ON_CLOSE);
+							itemF.setBounds(450, 150, 700, 600);
+							itemP = new ItemPanel(this);
+							itemF.add(itemP);
+							itemF.setVisible(true);
+						}
+					} catch (NullPointerException e) {
+
+					}
 				}
 			}
 		}
-		
-		ClearPanel clearP = new ClearPanel();
+
+		EndPanel clearP = new EndPanel(this);
 		redraw(clearP);
 	}
 
@@ -207,11 +208,23 @@ public class GameFrame extends JFrame {
 		player.nowImage.setIcon(player.setImage[0]);
 		flag = true;
 	}
+	
+	public void resumeStage() {
+		redraw(gameP);
+		fc = new FrameCount();
+		fc.start();
+		flag = true;
+	}
 
 	class MyKeyEvent extends KeyAdapter { // 동시 입력 시 끊김 동시입력 연구 필요
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
+			case KeyEvent.VK_ESCAPE:
+				flag = false;
+				fc.interrupt();
+				redraw(new PausePanel(gf));
+				break;
 			case 'A':
 				player.attack();
 				fc.pMotion++;

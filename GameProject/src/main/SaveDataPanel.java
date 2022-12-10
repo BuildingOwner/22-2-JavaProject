@@ -52,9 +52,9 @@ public class SaveDataPanel extends JPanel {
 				tp.add(new JLabel(userName[i]));
 				for (int j = 0; j < 4; j++) {
 					try {
-						items[i][j] = new Item(sc.next(), sc.nextInt());
+						items[i][j] = gf.itemP.returnItem(sc.next(), sc.nextInt());
 						tp.add(new JLabel(items[i][j].name));
-						tp.add(new JLabel(Integer.toString(items[i][j].level)));
+						tp.add(new JLabel(Integer.toString(items[i][j].power)));
 					} catch (NoSuchElementException e) {
 						items[i][j] = new Item();
 						tp.add(new JLabel(" 아이템 없음 "));

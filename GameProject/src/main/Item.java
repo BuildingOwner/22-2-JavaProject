@@ -7,17 +7,17 @@ import javax.swing.JLabel;
 
 public class Item {
 	public String name;
-	public int level;
 	public int power;
 	public int remain;
 	public int coolTime = 0;
 	public JLabel image;
 	public Image imageItem;
 
-	public Item(String name, int level) {
-		this.name = name;
-		this.level = level;
-		
+	public Item(Item t, int power) {
+		this.name = t.name;
+		this.power = power;
+		this.remain = t.remain;
+		this.setImage();
 	}
 	
 	public void setImage() {

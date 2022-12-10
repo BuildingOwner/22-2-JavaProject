@@ -78,6 +78,15 @@ public class ItemPanel extends JPanel {
 		}
 
 	}
+	
+	public Item returnItem(String name, int power) {
+		for(int i=0; i<ksy.length; i++) {
+			if(name.equals(ksy[i].name)) {
+				return new Item(ksy[i], power);
+			}
+		}
+		return null;
+	}
 
 	class ItemBtnAction implements ActionListener {
 

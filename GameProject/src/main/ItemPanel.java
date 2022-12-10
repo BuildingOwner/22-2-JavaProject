@@ -84,18 +84,17 @@ public class ItemPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
-			if (gf.player.itemCnt > 4) {
+			if (gf.player.itemCnt >= 4) {
 				Modal err = new Modal(gf, "아이템이 가득 찼습니다.");
+				err.setVisible(true);
 				gf.itemF.setVisible(false);
 				gf.nextStage();
 				return;
 			}
 			gf.player.items[gf.player.itemCnt++] = ksy[Integer.parseInt(btn.getName())];
-//			gf.redraw(gf.tgp);
 			gf.itemF.setVisible(false);
 			gf.nextStage();
 			gf.flag = true;
-
 		}
 
 	}

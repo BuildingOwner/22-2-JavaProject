@@ -10,6 +10,7 @@ public class Player extends GameObject {
 	Item[] items = new Item[4];
 	int itemCnt = 0;
 	GameFrame gf;
+	public Audio punch = new Audio("audio/punch.wav", false);
 
 	int lp;
 	int rp;
@@ -36,16 +37,29 @@ public class Player extends GameObject {
 	@Override
 	void attack() {
 		if (gf.player.attack) {
-			return;	
+			return;
 		}
+		punch.start();
 		gf.player.nowImage.setIcon(gf.player.setImage[1]);
 		gf.monster.hp = gf.monster.hp - Math.round((gf.player.damage * (100 - gf.monster.armor) / 100.0) * 100) / 100;
 		gf.monster.nowImage.setIcon(gf.monster.setImage[2]);
 		gf.player.attack = true;
-		gf.tgp.repaint();
-		
+		gf.gameP.repaint();
+
 		// flag : 한대만 쳐도 몬스터 죽음
 		gf.monster.hp = 0;
+	}
+
+	void skill(Item a) {
+		if (a.name == null || gf.player.attack || a.coolTime > 0) {
+			return;
+		}
+		a.coolTime = a.remain;
+		gf.player.nowImage.setIcon(gf.player.setImage[1]);
+		gf.monster.hp = gf.monster.hp - a.power;
+		gf.monster.nowImage.setIcon(gf.monster.setImage[2]);
+		gf.player.attack = true;
+		gf.gameP.repaint();
 	}
 
 }

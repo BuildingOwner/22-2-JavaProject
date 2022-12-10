@@ -13,16 +13,13 @@ public class GameFrame extends JFrame {
 	public StartPanel startP;
 	public HelpPanel helpP;
 	public SavePanel saveP;
-	public GamePanel gameP;
 	public InputName nameP;
 	public ItemPanel itemP;
+	public GamePanel gameP;
 	public JFrame itemF = new JFrame();
-
-	public Audio punch = new Audio("audio/punch.wav", false);
 
 	Player player;
 	Monster monster;
-	public TestGamePanel tgp;
 	FrameCount fc = new FrameCount();
 
 	int term = 0;
@@ -43,19 +40,18 @@ public class GameFrame extends JFrame {
 	}
 
 	public void game(String userName, Item[] items) {
-//		player = new Player(this, 100, 1, 0, userName, items);
 		player.name = userName;
 		player.items = items;
-		for(int i=0; i<player.items.length; i++) {
-			if(player.items[i].name != null) {
+		for (int i = 0; i < player.items.length; i++) {
+			if (player.items[i].name != null) {
 				player.itemCnt++;
 			}
 		}
 		monster = createMonster();
 
-		tgp = new TestGamePanel(this, items);
-		tgp.stage += stage++;
-		redraw(tgp);
+		gameP = new GamePanel(this, items);
+		gameP.stage += stage;
+		redraw(gameP);
 		this.addKeyListener(new MyKeyEvent());
 		this.setFocusable(true);
 		this.requestFocus();
@@ -67,8 +63,7 @@ public class GameFrame extends JFrame {
 	void gameRun() {
 		flag = true;
 		while (true) {
-			
-			
+
 			System.out.println(flag);
 			if (flag) {
 				System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion,
@@ -79,7 +74,7 @@ public class GameFrame extends JFrame {
 					player.nowImage.setIcon(player.setImage[0]);
 					fc.pMotion = 1;
 					player.attack = true;
-					
+
 				}
 				if (fc.pMotion % 5 == 0) {
 					monster.nowImage.setIcon(monster.setImage[0]);
@@ -106,6 +101,8 @@ public class GameFrame extends JFrame {
 					term = fc.frame;
 					fc.mMotion = 1;
 				}
+
+				// 플레이어 피격 판정
 				try {
 					if (monster.attack) {
 						if (player.lp >= monster.warning.getX() && player.lp <= (monster.warning.getX() + 190)
@@ -116,7 +113,7 @@ public class GameFrame extends JFrame {
 							int d = monster.damage;
 							d *= monster.paturn;
 							player.hp = player.hp - Math.round((d * (100 - player.armor) / 100.0) * 100) / 100;
-							tgp.repaint();
+							gameP.repaint();
 							monster.attack = false;
 						}
 						if (fc.frame == (term + 10)) {
@@ -129,12 +126,26 @@ public class GameFrame extends JFrame {
 
 				}
 
+				// 스킬 쿨타임
+				if (fc.frame % 100 == 0) {
+					System.out.println(player.items[0].coolTime);
+					System.out.println(gameP.cl[0].getText());
+					fc.frame++;
+					for (int i = 0; i < player.itemCnt; i++) {
+						if (player.items[i].coolTime == 0) {
+							continue;
+						}
+						player.items[i].coolTime--;
+						gameP.cl[i].setVisible(true);
+					}
+				}
+
+				// 몬스터 사망시 아이템 획득
 				try {
 					if (monster.hp <= 0) {
 						flag = false;
 						fc.interrupt();
 						monster.hp = 100;
-						
 						itemF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 						itemF.setBounds(450, 150, 700, 600);
 						itemP = new ItemPanel(this);
@@ -149,23 +160,25 @@ public class GameFrame extends JFrame {
 	}
 
 	public Monster createMonster() {
-		Monster m = null;
-		int i = (int) (Math.random() * 4 + 1);
-		switch (i) { // 몬스터들 수 만큼 늘어나야 함
+		String name = "";
+		int i = (int) (Math.random() * 4 + 1); // 몬스터들 수 만큼 늘어나야 함
+
+		switch (i) {
 		case 1:
-			m = new TestMonster(100, 1, 0, "test monster");
+			name = "Vat";
 			break;
 		case 2:
-			m = new TestMonster2(100, 1, 0, "test monster2");
+			name = "Flame Snake";
 			break;
 		case 3:
-			m = new TestMonster3(100, 1, 0, "test monster3");
+			name = "Goblin";
 			break;
 		case 4:
-			m = new TestMonster4(100, 1, 0, "test monster4");
+			name = "Undead";
 			break;
 		}
-		return m;
+
+		return new Monster(50 * stage, stage * 2, stage, name, i);
 	}
 
 	public void redraw(JPanel p) {
@@ -174,13 +187,13 @@ public class GameFrame extends JFrame {
 		this.revalidate();
 		this.repaint();
 	}
-	
+
 	public void nextStage() {
+		stage++;
 		monster = createMonster();
-		tgp = new TestGamePanel(this, player.items);
-		tgp.stage = "스테이지" + stage++;
-		redraw(tgp);
-//		tgp.repaint();
+		gameP = new GamePanel(this, player.items);
+		gameP.stage = "스테이지" + stage;
+		redraw(gameP);
 		fc = new FrameCount();
 		fc.start();
 		player.nowImage.setIcon(player.setImage[0]);
@@ -193,9 +206,19 @@ public class GameFrame extends JFrame {
 			switch (keyCode) {
 			case 'A':
 				player.attack();
-				punch.start();
 				fc.pMotion++;
-
+				break;
+			case 'Q':
+				player.skill(player.items[0]);
+				break;
+			case 'W':
+				player.skill(player.items[1]);
+				break;
+			case 'E':
+				player.skill(player.items[2]);
+				break;
+			case 'R':
+				player.skill(player.items[3]);
 				break;
 			case KeyEvent.VK_LEFT:
 				if (player.nowImage.getX() > 200) {

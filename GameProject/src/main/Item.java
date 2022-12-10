@@ -10,6 +10,7 @@ public class Item {
 	public int level;
 	public int power;
 	public int remain;
+	public int coolTime = 0;
 	public JLabel image;
 	public Image imageItem;
 
@@ -28,5 +29,6 @@ public class Item {
 	}
 
 	public Item() {
+		
 	}
 }

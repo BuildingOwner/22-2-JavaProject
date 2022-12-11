@@ -4,7 +4,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -13,7 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SavePanel extends JPanel {
+public class SaveDataPanel extends JPanel {
+
 	private JLabel title;
 	public JButton[] saves = new JButton[3];
 	public JButton home;
@@ -21,12 +24,12 @@ public class SavePanel extends JPanel {
 	public GameFrame gf;
 	public String[] userName = new String[3];
 
-	public SavePanel(GameFrame gameF) {
+	public SaveDataPanel(GameFrame gameF) {
 		this.setLayout(null);
 
 		this.gf = gameF;
 
-		title = new JLabel("불러 오기");
+		title = new JLabel("저장하기");
 		title.setBounds(390, 50, 230, 100);
 		Font font = new Font("", Font.BOLD, 50);
 		title.setFont(font);
@@ -34,7 +37,7 @@ public class SavePanel extends JPanel {
 		for (int i = 0; i < 3; i++) {
 			saves[i] = new JButton();
 			saves[i].setBounds(300, 200 + i * 120, 400, 100);
-			saves[i].setName("저장소" + (i + 1));
+			saves[i].setName("" + (i));
 		}
 
 		for (int i = 0; i < 3; i++) {
@@ -74,13 +77,12 @@ public class SavePanel extends JPanel {
 		home.addActionListener(btn);
 
 		this.add(title);
-		SaveBtnAction saveBtn = new SaveBtnAction();
+		SaveDataBtnAction saveBtn = new SaveDataBtnAction();
 		for (int i = 0; i < 3; i++) {
 			saves[i].addActionListener(saveBtn);
 			this.add(saves[i]);
 		}
 		this.add(home);
-
 	}
 
 	class HomeBtnAction implements ActionListener {
@@ -92,24 +94,35 @@ public class SavePanel extends JPanel {
 			if (btn.getText().equals("홈으로 돌아가기")) {
 				gf.redraw(gf.startP);
 			}
-
 		}
-
 	}
 
-	class SaveBtnAction implements ActionListener {
-		private Modal alert;
+	class SaveDataBtnAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			for (int i = 0; i < 3; i++) {
-				if (btn.getName().charAt(3) == (char) (i + 1 + '0')) {
-					if (userName[i] == null) {
-						alert = new Modal(gf, "저장된 파일이 없습니다.");
-						alert.setVisible(true);
-					} else {
-						gf.game(userName[i], items[i]);
+				if (btn.getName().equals(Integer.toString(i))) {
+					try {
+						BufferedWriter bw = new BufferedWriter(new FileWriter("./SaveFiles/SaveFile" + i + ".txt"));
+						if (userName[i] == null) {
+							bw.write(gf.player.name);
+							for (int j = 0; j < gf.player.itemCnt; j++) {
+								bw.newLine();
+								bw.write(gf.player.items[j].name + " " + gf.player.items[j].power);
+							}
+							Modal m = new Modal(gf, "저장이 완료되었습니다.");
+							m.setVisible(true);
+							gf.redraw(gf.startP);
+						}
+						else {
+							Modal m = new Modal(gf, "저장이 완료되었습니다.");
+							m.setVisible(true);
+						}
+						bw.close();
+					} catch (IOException e1) {
+
 					}
 				}
 			}

@@ -12,12 +12,12 @@ public class HelpPanel extends JPanel {
 	private JLabel title;
 	private JLabel discript;
 	public JButton home;
-	public GameFrame gameF;
+	public GameFrame gf;
 
 	public HelpPanel(GameFrame gameF) {
 		this.setLayout(null);
 
-		this.gameF = gameF;
+		this.gf = gameF;
 
 		title = new JLabel("조작 방법");
 		title.setBounds(390, 100, 230, 100);
@@ -44,10 +44,10 @@ public class HelpPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			if (btn.getText().equals("홈으로 돌아가기")) {
-				gameF.getContentPane().removeAll();
-				gameF.add(gameF.startP);
-				gameF.revalidate();
-				gameF.repaint();
+				gf.getContentPane().removeAll();
+				gf.add(gf.startP);
+				gf.revalidate();
+				gf.repaint();
 			}
 
 		}

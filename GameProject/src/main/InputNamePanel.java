@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class InputName extends JPanel {
+public class InputNamePanel extends JPanel {
 	private JLabel title;
 	JButton submitBtn;
 	JTextField nameField;
 	GameFrame gf;
 	String name;
 
-	InputName(GameFrame gameF) {
+	InputNamePanel(GameFrame gameF) {
 		this.setLayout(null);
 		this.gf = gameF;
 

@@ -78,24 +78,32 @@ public class ItemPanel extends JPanel {
 		}
 
 	}
+	
+	public Item returnItem(String name, int power) {
+		for(int i=0; i<ksy.length; i++) {
+			if(name.equals(ksy[i].name)) {
+				return new Item(ksy[i], power);
+			}
+		}
+		return null;
+	}
 
 	class ItemBtnAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
-			if (gf.player.itemCnt > 4) {
+			if (gf.player.itemCnt >= 4) {
 				Modal err = new Modal(gf, "아이템이 가득 찼습니다.");
+				err.setVisible(true);
 				gf.itemF.setVisible(false);
 				gf.nextStage();
 				return;
 			}
 			gf.player.items[gf.player.itemCnt++] = ksy[Integer.parseInt(btn.getName())];
-//			gf.redraw(gf.tgp);
 			gf.itemF.setVisible(false);
 			gf.nextStage();
 			gf.flag = true;
-
 		}
 
 	}

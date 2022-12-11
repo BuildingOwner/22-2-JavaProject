@@ -47,9 +47,10 @@ public class StartPanel extends JPanel {
 			if (btn.getText().equals("도움말")) {
 				gf.redraw(gf.helpP);
 			} else if (btn.getText().equals("이어 하기")) {
+				gf.saveP = new SavePanel(gf);
 				gf.redraw(gf.saveP);
 			} else {
-				gf.nameP = new InputName(gf);
+				gf.nameP = new InputNamePanel(gf);
 				gf.redraw(gf.nameP);
 
 			}

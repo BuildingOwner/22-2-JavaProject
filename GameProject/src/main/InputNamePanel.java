@@ -51,7 +51,7 @@ public class InputNamePanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == submitBtn) {
 				if (nameField.getText().equals("")) {
-					alert = new Modal(gf, "이름을 입력해 주셔야 게임이 시작됩니다.");
+					alert = new Modal(gf, "이름을 입력해 주셔야 게임이 시작됩니다.", "경고");
 					alert.setVisible(true);
 				}
 

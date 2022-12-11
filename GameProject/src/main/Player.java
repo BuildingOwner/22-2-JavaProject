@@ -46,7 +46,7 @@ public class Player extends GameObject {
 		gf.player.attack = true;
 		gf.gameP.repaint();
 
-		// flag : 한대만 쳐도 몬스터 죽음
+		// debug : 한대만 쳐도 몬스터 죽음
 		gf.monster.hp = 0;
 	}
 

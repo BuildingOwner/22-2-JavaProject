@@ -106,7 +106,7 @@ public class SavePanel extends JPanel {
 			for (int i = 0; i < 3; i++) {
 				if (btn.getName().charAt(3) == (char) (i + 1 + '0')) {
 					if (userName[i] == null) {
-						alert = new Modal(gf, "저장된 파일이 없습니다.");
+						alert = new Modal(gf, "저장된 파일이 없습니다.", "경고");
 						alert.setVisible(true);
 					} else {
 						gf.game(userName[i], items[i]);

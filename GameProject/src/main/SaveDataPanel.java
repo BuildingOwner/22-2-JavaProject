@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class SaveDataPanel extends JPanel {
@@ -112,13 +113,22 @@ public class SaveDataPanel extends JPanel {
 								bw.newLine();
 								bw.write(gf.player.items[j].name + " " + gf.player.items[j].power);
 							}
-							Modal m = new Modal(gf, "저장이 완료되었습니다.");
+							Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
 							m.setVisible(true);
 							gf.redraw(gf.startP);
 						}
 						else {
-							Modal m = new Modal(gf, "저장이 완료되었습니다.");
-							m.setVisible(true);
+							int confirm = JOptionPane.showConfirmDialog(null, "덮어 씌우겠습니까?", "경고", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+							if(confirm == 0) {
+								bw.write(gf.player.name);
+								for (int j = 0; j < gf.player.itemCnt; j++) {
+									bw.newLine();
+									bw.write(gf.player.items[j].name + " " + gf.player.items[j].power);
+								}
+								Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
+								m.setVisible(true);
+								gf.redraw(gf.startP);
+							}
 						}
 						bw.close();
 					} catch (IOException e1) {

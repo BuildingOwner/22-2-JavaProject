@@ -41,6 +41,7 @@ public class GameFrame extends JFrame {
 	}
 
 	public void game(String userName, Item[] items) {
+		stage = 1;
 		player = new Player(this, 100, 1, 0, "");
 		player.name = userName;
 		player.items = items;
@@ -143,8 +144,8 @@ public class GameFrame extends JFrame {
 						}
 					}
 
-					// 게임 클리어
-					if (stage > 3) {
+					// debug : 게임 종료
+					if (stage > 100) {
 						break;
 					} else {
 						// 몬스터 사망시 아이템 획득
@@ -254,7 +255,7 @@ public class GameFrame extends JFrame {
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				if (player.nowImage.getX() < 700) {
+				if (player.nowImage.getX() < 700 && flag == true) {
 					player.nowImage.setLocation(player.nowImage.getX() + 20, player.nowImage.getY());
 					player.lp = player.nowImage.getX();
 					player.rp = player.nowImage.getX() + 140;

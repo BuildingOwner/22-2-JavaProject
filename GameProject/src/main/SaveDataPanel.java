@@ -4,7 +4,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -12,9 +14,6 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import main.SavePanel.HomeBtnAction;
-import main.SavePanel.SaveBtnAction;
 
 public class SaveDataPanel extends JPanel {
 
@@ -38,7 +37,7 @@ public class SaveDataPanel extends JPanel {
 		for (int i = 0; i < 3; i++) {
 			saves[i] = new JButton();
 			saves[i].setBounds(300, 200 + i * 120, 400, 100);
-			saves[i].setName("저장소" + (i + 1));
+			saves[i].setName("" + (i));
 		}
 
 		for (int i = 0; i < 3; i++) {
@@ -97,14 +96,36 @@ public class SaveDataPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	class SaveDataBtnAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			JButton btn = (JButton) e.getSource();
+			for (int i = 0; i < 3; i++) {
+				if (btn.getName().equals(Integer.toString(i))) {
+					try {
+						BufferedWriter bw = new BufferedWriter(new FileWriter("./SaveFiles/SaveFile" + i + ".txt"));
+						if (userName[i] == null) {
+							bw.write(gf.player.name);
+							for (int j = 0; j < gf.player.itemCnt; j++) {
+								bw.newLine();
+								bw.write(gf.player.items[j].name + " " + gf.player.items[j].power);
+							}
+							Modal m = new Modal(gf, "저장이 완료되었습니다.");
+							m.setVisible(true);
+							gf.redraw(gf.startP);
+						}
+						else {
+							Modal m = new Modal(gf, "저장이 완료되었습니다.");
+							m.setVisible(true);
+						}
+						bw.close();
+					} catch (IOException e1) {
+
+					}
+				}
+			}
 		}
-		
 	}
 }

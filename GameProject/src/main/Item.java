@@ -19,7 +19,7 @@ public class Item {
 		this.remain = t.remain;
 		this.setImage();
 	}
-	
+
 	public void setImage() {
 		ImageIcon itemImage = new ImageIcon("images/" + name + ".png");
 		Image tmp = itemImage.getImage();
@@ -29,6 +29,6 @@ public class Item {
 	}
 
 	public Item() {
-		
+
 	}
 }

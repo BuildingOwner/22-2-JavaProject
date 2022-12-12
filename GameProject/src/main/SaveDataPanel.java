@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,34 +31,38 @@ public class SaveDataPanel extends JPanel {
 
 		this.gf = gameF;
 
-		title = new JLabel("저장하기");
+		title = gf.mkLabel("저장하기", 50);
 		title.setBounds(390, 50, 230, 100);
-		Font font = new Font("", Font.BOLD, 50);
-		title.setFont(font);
 
 		for (int i = 0; i < 3; i++) {
-			saves[i] = new JButton();
+			saves[i] = gf.createBtn("");
 			saves[i].setBounds(300, 200 + i * 120, 400, 100);
 			saves[i].setName("" + (i));
 		}
 
 		for (int i = 0; i < 3; i++) {
 			JPanel tp = new JPanel();
+			tp.setLayout(null);
 			try {
 				Scanner sc = new Scanner(new BufferedReader(new FileReader("./SaveFiles/SaveFile" + i + ".txt")));
 				if (!sc.hasNext()) {
 					throw new IOException();
 				}
 				userName[i] = sc.next();
-				tp.add(new JLabel(userName[i]));
+				JLabel tl = gf.mkLabel("<< " + userName[i] + " >>", 0);
+				tl.setBounds(145, 0, 100, 20);
+				tp.add(tl);
 				for (int j = 0; j < 4; j++) {
 					try {
 						items[i][j] = gf.itemP.returnItem(sc.next(), sc.nextInt());
-						tp.add(new JLabel(items[i][j].name));
-						tp.add(new JLabel(Integer.toString(items[i][j].power)));
+						tl = gf.mkLabel(items[i][j].name + Integer.toString(items[i][j].power), 0);
+						tl.setBounds(10 + (j * 95), 30, 90, 20);
+						tp.add(tl);
 					} catch (NoSuchElementException e) {
 						items[i][j] = new Item();
-						tp.add(new JLabel(" 아이템 없음 "));
+						tl = gf.mkLabel(" 아이템 없음 ", 0);
+						tl.setBounds(10 + (j * 95), 30, 90, 20);
+						tp.add(tl);
 					}
 
 				}
@@ -67,12 +72,16 @@ public class SaveDataPanel extends JPanel {
 				for (int j = 0; j < 4; j++) {
 					items[i][j] = new Item();
 				}
-				tp.add(new JLabel("저장된 파일이 없습니다."));
+				tp.add(gf.mkLabel("저장된 파일이 없습니다.", 0));
 			}
+			saves[i].setLayout(null);
+			tp.setOpaque(true);
+			tp.setBackground(Color.black);
+			tp.setBounds(3, 25, 394, 50);
 			saves[i].add(tp);
 		}
 
-		home = new JButton("홈으로 돌아가기");
+		home = gf.createBtn("홈으로 돌아가기");
 		home.setBounds(750, 600, 200, 50);
 		HomeBtnAction btn = new HomeBtnAction();
 		home.addActionListener(btn);
@@ -84,6 +93,7 @@ public class SaveDataPanel extends JPanel {
 			this.add(saves[i]);
 		}
 		this.add(home);
+		this.add(gf.backgrounds[6]);
 	}
 
 	class HomeBtnAction implements ActionListener {
@@ -116,10 +126,10 @@ public class SaveDataPanel extends JPanel {
 							Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
 							m.setVisible(true);
 							gf.redraw(gf.startP);
-						}
-						else {
-							int confirm = JOptionPane.showConfirmDialog(null, "덮어 씌우겠습니까?", "경고", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-							if(confirm == 0) {
+						} else {
+							int confirm = JOptionPane.showConfirmDialog(null, "덮어 씌우겠습니까?", "경고",
+									JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+							if (confirm == 0) {
 								bw.write(gf.player.name);
 								for (int j = 0; j < gf.player.itemCnt; j++) {
 									bw.newLine();

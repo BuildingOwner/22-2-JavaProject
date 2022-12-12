@@ -53,7 +53,7 @@ public class ItemPanel extends JPanel {
 			choose[i].setBounds(140, 150 + i * 140, 400, 100);
 			this.add(choose[i]);
 		}
-
+		System.out.println();
 	}
 
 	public void initItem() {
@@ -94,22 +94,21 @@ public class ItemPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
+			Item ksy2 = new Item(ksy[Integer.parseInt(btn.getName())], ksy[Integer.parseInt(btn.getName())].power);
 			if (gf.player.itemCnt >= 4) {
 				String input = JOptionPane.showInputDialog("아이템이 가득 찼습니다.\n아이템을 교체하시겠습니까?\n교체할 아이템 슬롯의\n번호를 입력해 주세요.",
 						"(1~4)");
-				if(input != null) {
-					gf.player.items[Integer.parseInt(input)-1] = ksy[Integer.parseInt(btn.getName())];
+				if (input != null) {
+					gf.player.items[Integer.parseInt(input) - 1] = ksy2;
 				}
 				gf.itemF.setVisible(false);
 				gf.nextStage();
 				return;
 			}
-			gf.player.items[gf.player.itemCnt++] = ksy[Integer.parseInt(btn.getName())];
+			gf.player.items[gf.player.itemCnt++] = ksy2;
 			gf.itemF.setVisible(false);
 			gf.nextStage();
 			gf.flag = true;
 		}
-
 	}
-
 }

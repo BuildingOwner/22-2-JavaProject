@@ -55,7 +55,7 @@ public class GameFrame extends JFrame {
 
 	public void game(String userName, Item[] items) {
 		stage = 1;
-		player = new Player(this, 100, 1, 0, "");
+		player = new Player(this, 10, 1, 0, "");
 		player.name = userName;
 		player.items = items;
 		for (int i = 0; i < player.items.length; i++) {
@@ -152,7 +152,7 @@ public class GameFrame extends JFrame {
 								continue;
 							}
 							player.items[i].coolTime--;
-							gameP.cl[i].setVisible(true);
+							gameP.cl[i].setText(" " + Integer.toString(player.items[i].coolTime));
 						}
 					}
 
@@ -175,6 +175,10 @@ public class GameFrame extends JFrame {
 						} catch (NullPointerException e) {
 
 						}
+					}
+					
+					if(player.hp<=0) {
+						break;
 					}
 				}
 			} catch (NullPointerException e) {

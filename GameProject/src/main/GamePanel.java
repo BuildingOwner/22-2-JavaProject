@@ -45,7 +45,6 @@ public class GamePanel extends JPanel {
 		healthDraw(g);
 		itemDraw(g);
 		infoDraw(g);
-		drawKey();
 	}
 
 	public void healthDraw(Graphics g) { // Player와 Monster의 체력을 받아와야됨.
@@ -58,6 +57,8 @@ public class GamePanel extends JPanel {
 	}
 
 	public void itemDraw(Graphics g) { // Player가 가진 현재 아이템을 배열에 넣어 출력할 예정
+		g.setColor(Color.black);
+		g.fillRect(20, 580, 280, 70);
 		g.setColor(Color.white);
 		for (int i = 0; i < 4; i++) {
 			g.drawRect(20 + (i * 70), 580, 70, 70);
@@ -79,17 +80,20 @@ public class GamePanel extends JPanel {
 	}
 
 	public void drawKey() {
-		String[] keys = { "Q", "W", "E", "R" };
+		String[] keys = { " Q", " W", " E", " R" };
 		for (int i = 0; i < gf.player.items.length; i++) {
-			cl[i] = new JLabel(Integer.toString(gf.player.items[i].coolTime));
+			cl[i] = new JLabel(" " + Integer.toString(gf.player.items[i].coolTime));
 			cl[i].setForeground(Color.white);
-			cl[i].setText(Integer.toString(gf.player.items[i].coolTime));
-			cl[i].setBounds(78 + (70 * i), 580, 20, 20);
+			cl[i].setBounds(73 + (70 * i), 560, 15, 20);
+			cl[i].setOpaque(true);
+			cl[i].setBackground(Color.black);
 			this.add(cl[i]);
 
 			skillKey[i] = new JLabel(keys[i]);
 			skillKey[i].setForeground(Color.white);
-			skillKey[i].setBounds(25 + (70 * i), 625, 20, 20);
+			skillKey[i].setBounds(23 + (70 * i), 560, 15, 20);
+			skillKey[i].setOpaque(true);
+			skillKey[i].setBackground(Color.black);
 			this.add(skillKey[i]);
 		}
 	}

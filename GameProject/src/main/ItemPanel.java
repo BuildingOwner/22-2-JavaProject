@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +26,8 @@ public class ItemPanel extends JPanel {
 		this.gf = gf;
 		initItem();
 
-		title = new JLabel("전리품 획득!");
-		title.setBounds(200, 50, 400, 50);
-		Font font = new Font("", Font.BOLD, 50);
-		title.setFont(font);
+		title = gf.mkLabel("전리품 획득!", 50);
+		title.setBounds(175, 30, 340, 70);
 		this.add(title);
 
 		int[] n = new int[3];
@@ -43,17 +42,23 @@ public class ItemPanel extends JPanel {
 
 		for (int i = 0; i < choose.length; i++) {
 			JPanel tp = new JPanel();
+			tp.setOpaque(true);
+			tp.setBackground(Color.black);
 			tp.add(new JLabel(ksy[n[i]].image.getIcon()));
-			tp.add(new JLabel(ksy[n[i]].name + "  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :"
-					+ Integer.toString(ksy[n[i]].remain)));
-			choose[i] = new JButton();
+			tp.add(gf.mkLabel(ksy[n[i]].name, 30));
+			tp.add(gf.mkLabel(
+					"  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :" + Integer.toString(ksy[n[i]].remain),
+					0));
+			tp.setBounds(10, 10, 380, 110);
+			choose[i] = gf.createBtn("");
+			choose[i].setLayout(null);
 			choose[i].add(tp);
 			choose[i].setName(Integer.toString(n[i]));
 			choose[i].addActionListener(new ItemBtnAction());
-			choose[i].setBounds(140, 150 + i * 140, 400, 100);
+			choose[i].setBounds(140, 120 + i * 140, 400, 130);
 			this.add(choose[i]);
 		}
-		System.out.println();
+		this.add(gf.backgrounds[11]);
 	}
 
 	public void initItem() {

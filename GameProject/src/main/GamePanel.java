@@ -29,7 +29,6 @@ public class GamePanel extends JPanel {
 		for (int i = 0; i < 4; i++) {
 			this.playerItem[i] = new ImageIcon("images/" + items[i].name + ".png").getImage();
 		}
-		drawKey();
 		
 		this.add(gf.player.nowImage);
 		this.add(gf.monster.nowImage);
@@ -45,6 +44,7 @@ public class GamePanel extends JPanel {
 		healthDraw(g);
 		itemDraw(g);
 		infoDraw(g);
+		drawKey(g);
 	}
 
 	public void healthDraw(Graphics g) { // Player와 Monster의 체력을 받아와야됨.
@@ -79,22 +79,12 @@ public class GamePanel extends JPanel {
 
 	}
 
-	public void drawKey() {
+	public void drawKey(Graphics g) {
 		String[] keys = { " Q", " W", " E", " R" };
-		for (int i = 0; i < gf.player.items.length; i++) {
-			cl[i] = new JLabel(" " + Integer.toString(gf.player.items[i].coolTime));
-			cl[i].setForeground(Color.white);
-			cl[i].setBounds(73 + (70 * i), 560, 15, 20);
-			cl[i].setOpaque(true);
-			cl[i].setBackground(Color.black);
-			this.add(cl[i]);
-
-			skillKey[i] = new JLabel(keys[i]);
-			skillKey[i].setForeground(Color.white);
-			skillKey[i].setBounds(23 + (70 * i), 560, 15, 20);
-			skillKey[i].setOpaque(true);
-			skillKey[i].setBackground(Color.black);
-			this.add(skillKey[i]);
+		g.setFont(new Font("", Font.BOLD, 15));
+		for(int i=0; i<gf.player.items.length; i++) {
+			g.drawString(keys[i], 23 + (70 * i), 640);
+			g.drawString(Integer.toString(gf.player.items[i].coolTime), 70 + (70 * i), 600);
 		}
 	}
 

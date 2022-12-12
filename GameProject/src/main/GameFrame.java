@@ -55,7 +55,7 @@ public class GameFrame extends JFrame {
 
 	public void game(String userName, Item[] items) {
 		stage = 1;
-		player = new Player(this, 10, 1, 0, "");
+		player = new Player(this, 100, 1, 0, "");
 		player.name = userName;
 		player.items = items;
 		for (int i = 0; i < player.items.length; i++) {
@@ -67,6 +67,7 @@ public class GameFrame extends JFrame {
 
 		gameP = new GamePanel(this, items);
 		gameP.stage += stage;
+
 		redraw(gameP);
 		this.addKeyListener(new MyKeyEvent());
 		this.setFocusable(true);
@@ -145,14 +146,13 @@ public class GameFrame extends JFrame {
 					// 스킬 쿨타임
 					if (fc.frame % 100 == 0) {
 						System.out.println(player.items[0].coolTime);
-						System.out.println(gameP.cl[0].getText());
 						fc.frame++;
 						for (int i = 0; i < player.itemCnt; i++) {
 							if (player.items[i].coolTime == 0) {
 								continue;
 							}
 							player.items[i].coolTime--;
-							gameP.cl[i].setText(" " + Integer.toString(player.items[i].coolTime));
+							gameP.repaint();
 						}
 					}
 

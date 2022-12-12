@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,9 @@ public class PausePanel extends JPanel {
 		title = new JLabel("일시정지");
 		Font font = new Font("", Font.BOLD, 50);
 		title.setFont(font);
-		title.setBounds(395, 130, 400, 60);
+		title.setBounds(395, 130, 210, 60);
+		title.setOpaque(true);
+		title.setBackground(Color.white);
 		this.add(title);
 		
 		BtnAction btn = new BtnAction();
@@ -41,6 +44,8 @@ public class PausePanel extends JPanel {
 		home.setBounds(400, 500, 200, 50);
 		home.addActionListener(btn);
 		this.add(home);
+		
+		this.add(gf.backgrounds[6]);
 	}
 	
 	class BtnAction implements ActionListener {

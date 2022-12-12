@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,9 +24,13 @@ public class HelpPanel extends JPanel {
 		title.setBounds(390, 100, 230, 100);
 		Font font = new Font("", Font.BOLD, 50);
 		title.setFont(font);
+		title.setOpaque(true);
+		title.setBackground(Color.white);
 
 		discript = new JLabel("<html>A키를 눌러 공격<br>D키를 눌러 방어<br>화살표를 눌러 피하세요.</html>");
-		discript.setBounds(300, 150, 300, 300);
+		discript.setBounds(300, 250, 400, 200);
+		discript.setOpaque(true);
+		discript.setBackground(Color.white);
 
 		home = new JButton("홈으로 돌아가기");
 		home.setBounds(750, 600, 200, 50);
@@ -35,6 +40,7 @@ public class HelpPanel extends JPanel {
 		this.add(title);
 		this.add(discript);
 		this.add(home);
+		this.add(gf.backgrounds[7]);
 
 	}
 

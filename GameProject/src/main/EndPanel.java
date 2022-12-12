@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,15 +28,19 @@ public class EndPanel extends JPanel {
 		this.setLayout(null);
 
 		end = new JLabel("게임 오버");
-		end.setBounds(360, 90, 400, 50);
+		end.setBounds(360, 290, 270, 60);
 		Font font = new Font("", Font.BOLD, 60);
 		end.setFont(font);
+		end.setOpaque(true);
+		end.setBackground(Color.white);
 		this.add(end);
 
 		score = new JLabel("내 점수 : " + Integer.toString(gf.stage - 1) + "층");
-		score.setBounds(410, 180, 400, 50);
+		score.setBounds(410, 335, 180, 50);
 		font = new Font("", Font.PLAIN, 30);
 		score.setFont(font);
+		score.setOpaque(true);
+		score.setBackground(Color.white);
 		this.add(score);
 
 		home = new JButton("홈으로 돌아가기");
@@ -43,6 +48,8 @@ public class EndPanel extends JPanel {
 		HomeBtnAction btn = new HomeBtnAction();
 		home.addActionListener(btn);
 		this.add(home);
+		
+		this.add(gf.backgrounds[10]);
 
 	}
 

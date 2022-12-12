@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,9 +28,11 @@ public class SavePanel extends JPanel {
 		this.gf = gameF;
 
 		title = new JLabel("불러 오기");
-		title.setBounds(390, 50, 230, 100);
+		title.setBounds(390, 50, 225, 100);
 		Font font = new Font("", Font.BOLD, 50);
 		title.setFont(font);
+		title.setOpaque(true);
+		title.setBackground(Color.white);
 
 		for (int i = 0; i < 3; i++) {
 			saves[i] = new JButton();
@@ -80,6 +83,7 @@ public class SavePanel extends JPanel {
 			this.add(saves[i]);
 		}
 		this.add(home);
+		this.add(gf.backgrounds[8]);
 
 	}
 

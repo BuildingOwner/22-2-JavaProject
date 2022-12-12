@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameFrame extends JFrame {
@@ -19,10 +20,8 @@ public class GameFrame extends JFrame {
 	public GamePanel gameP;
 	public JFrame itemF = new JFrame();
 	public GameFrame gf = this;
-	public Image[] screenImage = { // 배경으로 쓰일 이미지
-			new ImageIcon("images/stage1map.png").getImage(), new ImageIcon("images/stage2map.jpg").getImage(),
-			new ImageIcon("images/stage3map.jpg").getImage() };
-
+	public ImageIcon[] screenImage = new ImageIcon[11];
+	public JLabel[] backgrounds = new JLabel[11];
 	Player player;
 	Monster monster;
 	FrameCount fc;
@@ -34,13 +33,23 @@ public class GameFrame extends JFrame {
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBounds(300, 100, 1000, 700);
-//		player = new Player(this, 100, 1, 0, "");
+		
+		for (int i = 0; i < screenImage.length; i++) {
+			screenImage[i] = new ImageIcon("images/stage"+i+"map.png");
+			Image tmp = screenImage[i].getImage();
+			Image tmp2 = tmp.getScaledInstance(1000, 700, Image.SCALE_SMOOTH);
+			this.screenImage[i] = new ImageIcon(tmp2);
+			backgrounds[i] = new JLabel(screenImage[i]);
+			backgrounds[i].setSize(1000, 700);
+		}
+
 		startP = new StartPanel(this);
 		helpP = new HelpPanel(this);
 		itemP = new ItemPanel(this);
 
 		this.add(startP);
 		this.setVisible(true);
+		redraw(startP);
 
 	}
 
@@ -74,8 +83,7 @@ public class GameFrame extends JFrame {
 			try {
 				System.out.println(flag);
 				if (flag) {
-					System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync,
-							fc.pMotion, fc.mMotion);
+					System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion, fc.mMotion);
 
 					// 플레이어 기본 공격
 					if (fc.pMotion % 10 == 0) { // 공격 모션
@@ -149,7 +157,7 @@ public class GameFrame extends JFrame {
 					}
 
 					// debug : 게임 종료
-					if (stage > 100) {
+					if (stage > 3) {
 						break;
 					} else {
 						// 몬스터 사망시 아이템 획득

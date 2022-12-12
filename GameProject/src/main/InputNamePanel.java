@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,10 @@ public class InputNamePanel extends JPanel {
 
 		this.title = new JLabel("이름을 입력하세요");
 		title.setFont(new Font("", Font.PLAIN, 40));
-		title.setBounds(330, 200, 600, 70);
+		title.setBounds(330, 200, 335, 70);
+		title.setOpaque(true);
+		title.setBackground(Color.white);
+		
 		this.nameField = new JTextField(12); // 이름 글자 수 제한 구현 하기
 		nameField.setBounds(380, 300, 150, 30);
 		this.submitBtn = new JButton("저장");
@@ -33,6 +37,7 @@ public class InputNamePanel extends JPanel {
 		this.add(title);
 		this.add(nameField);
 		this.add(submitBtn);
+		this.add(gf.backgrounds[9]);
 
 	}
 

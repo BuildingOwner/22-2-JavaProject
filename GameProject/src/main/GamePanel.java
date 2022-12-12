@@ -20,28 +20,22 @@ public class GamePanel extends JPanel {
 
 	Image[] playerItem = new Image[4];
 
-//	private Image[] screenImage = { // 배경으로 쓰일
-//			new ImageIcon("images/stage1map.png").getImage(), new ImageIcon("images/stage2map.jpg").getImage(),
-//			new ImageIcon("images/stage3map.jpg").getImage() };
-	JLabel mapImage; // 현재 맵 이미지
-
 	public GamePanel(GameFrame gf, Item[] items) {
 		this.setLayout(null);
 		this.gf = gf;
 		this.playerName = gf.player.name;
 		this.monsterName = gf.monster.name;
-		this.mapImage = new JLabel(new ImageIcon(gf.screenImage[0]));
 
 		for (int i = 0; i < 4; i++) {
 			this.playerItem[i] = new ImageIcon("images/" + items[i].name + ".png").getImage();
 		}
 		drawKey();
-		mapImage.setSize(1000, 700);
-
+		
 		this.add(gf.player.nowImage);
 		this.add(gf.monster.nowImage);
 		this.add(gf.monster.warning);
-		this.add(mapImage);
+		int n = (int)(Math.random()*5+1);
+		this.add(gf.backgrounds[n]);
 	}
 
 	@Override
@@ -72,9 +66,13 @@ public class GamePanel extends JPanel {
 	}
 
 	public void infoDraw(Graphics g) { // 스테이지, 플레이어, 몬스터 이름 출력
+		g.setColor(Color.black);
+		g.fillRoundRect(420, 20, 158, 40, 5, 5);
 		g.setColor(Color.white);
+		g.drawRoundRect(420, 20, 158, 40, 5, 5);
+		g.setFont(new Font("", Font.BOLD, 30));
+		g.drawString(stage, 430, 50);
 		g.setFont(new Font("", Font.BOLD, 20));
-		g.drawString(stage, 450, 50);
 		g.drawString(playerName, 20, 80);
 		g.drawString(monsterName, 965 - (monsterName.length() * 10), 80);
 
@@ -85,6 +83,7 @@ public class GamePanel extends JPanel {
 		for (int i = 0; i < gf.player.items.length; i++) {
 			cl[i] = new JLabel(Integer.toString(gf.player.items[i].coolTime));
 			cl[i].setForeground(Color.white);
+			cl[i].setText(Integer.toString(gf.player.items[i].coolTime));
 			cl[i].setBounds(78 + (70 * i), 580, 20, 20);
 			this.add(cl[i]);
 

@@ -1,11 +1,12 @@
 package main;
 
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameFrame extends JFrame {
@@ -18,6 +19,9 @@ public class GameFrame extends JFrame {
 	public GamePanel gameP;
 	public JFrame itemF = new JFrame();
 	public GameFrame gf = this;
+	public Image[] screenImage = { // 배경으로 쓰일 이미지
+			new ImageIcon("images/stage1map.png").getImage(), new ImageIcon("images/stage2map.jpg").getImage(),
+			new ImageIcon("images/stage3map.jpg").getImage() };
 
 	Player player;
 	Monster monster;

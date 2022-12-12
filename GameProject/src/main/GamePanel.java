@@ -20,17 +20,18 @@ public class GamePanel extends JPanel {
 
 	Image[] playerItem = new Image[4];
 
-	private Image[] screenImage = { // 배경으로 쓰일 이미지
-			new ImageIcon("images/stage1map.png").getImage(), new ImageIcon("images/stage2map.jpg").getImage(),
-			new ImageIcon("images/stage3map.jpg").getImage() };
-	JLabel mapImage = new JLabel(new ImageIcon(screenImage[0])); // 현재 맵 이미지
+//	private Image[] screenImage = { // 배경으로 쓰일
+//			new ImageIcon("images/stage1map.png").getImage(), new ImageIcon("images/stage2map.jpg").getImage(),
+//			new ImageIcon("images/stage3map.jpg").getImage() };
+	JLabel mapImage; // 현재 맵 이미지
 
 	public GamePanel(GameFrame gf, Item[] items) {
 		this.setLayout(null);
 		this.gf = gf;
 		this.playerName = gf.player.name;
 		this.monsterName = gf.monster.name;
-		
+		this.mapImage = new JLabel(new ImageIcon(gf.screenImage[0]));
+
 		for (int i = 0; i < 4; i++) {
 			this.playerItem[i] = new ImageIcon("images/" + items[i].name + ".png").getImage();
 		}
@@ -78,15 +79,15 @@ public class GamePanel extends JPanel {
 		g.drawString(monsterName, 965 - (monsterName.length() * 10), 80);
 
 	}
-	
+
 	public void drawKey() {
-		String[] keys = {"Q", "W", "E", "R"};
+		String[] keys = { "Q", "W", "E", "R" };
 		for (int i = 0; i < gf.player.items.length; i++) {
 			cl[i] = new JLabel(Integer.toString(gf.player.items[i].coolTime));
 			cl[i].setForeground(Color.white);
 			cl[i].setBounds(78 + (70 * i), 580, 20, 20);
 			this.add(cl[i]);
-			
+
 			skillKey[i] = new JLabel(keys[i]);
 			skillKey[i].setForeground(Color.white);
 			skillKey[i].setBounds(25 + (70 * i), 625, 20, 20);

@@ -1,12 +1,15 @@
 package main;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PausePanel extends JPanel {
+	private JLabel title;
 	private JButton resume;
 	private JButton saveQuit;
 	private JButton home;
@@ -16,20 +19,26 @@ public class PausePanel extends JPanel {
 		this.setLayout(null);
 		this.gf = gf;
 		
+		title = new JLabel("일시정지");
+		Font font = new Font("", Font.BOLD, 50);
+		title.setFont(font);
+		title.setBounds(395, 130, 400, 60);
+		this.add(title);
+		
 		BtnAction btn = new BtnAction();
 		
 		resume = new JButton("돌아가기");
-		resume.setBounds(400, 250, 200, 50);
+		resume.setBounds(400, 280, 200, 50);
 		resume.addActionListener(btn);
 		this.add(resume);
 		
 		saveQuit = new JButton("저장하고 나가기");
-		saveQuit.setBounds(400, 360, 200, 50);
+		saveQuit.setBounds(400, 390, 200, 50);
 		saveQuit.addActionListener(btn);
 		this.add(saveQuit);
 		
 		home = new JButton("홈으로 돌아가기");
-		home.setBounds(400, 470, 200, 50);
+		home.setBounds(400, 500, 200, 50);
 		home.addActionListener(btn);
 		this.add(home);
 	}

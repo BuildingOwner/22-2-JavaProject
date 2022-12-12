@@ -95,8 +95,8 @@ public class ItemPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			if (gf.player.itemCnt >= 4) {
-				String input = JOptionPane.showInputDialog("아이템이 가득 찼습니다.\n아이템을 교체하시겠습니까?",
-						"교체할 아이템 슬롯의 번호를 입력해 주세요.(1~4)");
+				String input = JOptionPane.showInputDialog("아이템이 가득 찼습니다.\n아이템을 교체하시겠습니까?\n교체할 아이템 슬롯의\n번호를 입력해 주세요.",
+						"(1~4)");
 				if(input != null) {
 					gf.player.items[Integer.parseInt(input)-1] = ksy[Integer.parseInt(btn.getName())];
 				}

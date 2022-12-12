@@ -198,11 +198,11 @@ public class GameFrame extends JFrame {
 			}
 
 			if (end) {
-				stage = 1;
 				flag = false;
 				end = false;
 				EndPanel clearP = new EndPanel(this);
 				redraw(clearP);
+				stage = 1;
 			}
 		}
 	}

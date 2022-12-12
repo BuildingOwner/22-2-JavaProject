@@ -88,8 +88,14 @@ public class GamePanel extends JPanel {
 		g.setFont(new Font("", Font.BOLD, 30));
 		g.drawString(stage, 430, 50);
 		g.setFont(new Font("", Font.BOLD, 20));
-		g.drawString(playerName, 20, 80);
-		g.drawString(monsterName, 965 - (monsterName.length() * 10), 80);
+		drawThickRect(g, 20, 80, 13*playerName.length(), 30, 4, true);
+		drawThickRect(g, 940 - (monsterName.length() * 10), 80, 13*monsterName.length(), 30, 4, true);
+		g.setColor(Color.black);
+		g.fillRoundRect(20, 80, 13*playerName.length(), 30, 5, 5);
+		g.fillRoundRect(940 - (monsterName.length() * 10), 80, 13*monsterName.length(), 30, 5, 5);
+		g.setColor(Color.white);
+		g.drawString(playerName, 22, 100);
+		g.drawString(monsterName, 942 - (monsterName.length() * 10), 100);
 
 	}
 

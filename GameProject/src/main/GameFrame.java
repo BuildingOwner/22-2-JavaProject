@@ -1,14 +1,24 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class GameFrame extends JFrame {
 	public Scanner sc = new Scanner(System.in);
@@ -28,14 +38,15 @@ public class GameFrame extends JFrame {
 
 	int term = 0;
 	int stage = 1;
-	boolean flag = false; // 0 정지, 1 실행, 2 종료
+	boolean flag = false;
+	boolean end = false;
 
 	public GameFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBounds(300, 100, 1000, 700);
-		
+
 		for (int i = 0; i < screenImage.length; i++) {
-			screenImage[i] = new ImageIcon("images/stage"+i+"map.png");
+			screenImage[i] = new ImageIcon("images/stage" + i + "map.png");
 			Image tmp = screenImage[i].getImage();
 			Image tmp2 = tmp.getScaledInstance(1000, 700, Image.SCALE_SMOOTH);
 			this.screenImage[i] = new ImageIcon(tmp2);
@@ -84,7 +95,8 @@ public class GameFrame extends JFrame {
 			try {
 				System.out.println(flag);
 				if (flag) {
-					System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync, fc.pMotion, fc.mMotion);
+					System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync,
+							fc.pMotion, fc.mMotion);
 
 					// 플레이어 기본 공격
 					if (fc.pMotion % 10 == 0) { // 공격 모션
@@ -158,7 +170,7 @@ public class GameFrame extends JFrame {
 
 					// debug : 게임 종료
 					if (stage > 3) {
-						break;
+						end = true;
 					} else {
 						// 몬스터 사망시 아이템 획득
 						try {
@@ -176,18 +188,23 @@ public class GameFrame extends JFrame {
 
 						}
 					}
-					
-					if(player.hp<=0) {
-						break;
+
+					if (player.hp <= 0) {
+						end = true;
 					}
 				}
 			} catch (NullPointerException e) {
 
 			}
-		}
 
-		EndPanel clearP = new EndPanel(this);
-		redraw(clearP);
+			if (end) {
+				stage = 1;
+				flag = false;
+				end = false;
+				EndPanel clearP = new EndPanel(this);
+				redraw(clearP);
+			}
+		}
 	}
 
 	public Monster createMonster() {
@@ -238,6 +255,52 @@ public class GameFrame extends JFrame {
 		flag = true;
 	}
 
+	public static JButton createBtn(String text) {
+		JButton button;
+		if (text == null) {
+			button = new JButton();
+		} else {
+			button = new JButton(text);
+		}
+		button.setForeground(Color.white);
+		button.setBackground(Color.black);
+		button.setFocusPainted(false);
+		button.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				button.setBackground(Color.gray);
+			}
+
+			public void mouseExited(MouseEvent evt) {
+				button.setBackground(Color.black);
+			}
+		});
+
+		Border line = new LineBorder(Color.white, 3);
+		Border margin = new EmptyBorder(0, 0, 0, 0);
+		Border compound = new CompoundBorder(line, margin);
+		button.setBorder(line);
+		return button;
+	}
+
+	public static JLabel mkLabel(String text, int n) {
+		JLabel tmp = new JLabel(text, SwingConstants.CENTER);
+		if (n == 0) {
+			Font font = new Font("", Font.BOLD, 15);
+			tmp.setFont(font);
+			tmp.setForeground(Color.white);
+			tmp.setOpaque(true);
+			tmp.setBackground(Color.black);
+		} else {
+			Font font = new Font("", Font.BOLD, n);
+			tmp.setFont(font);
+			tmp.setForeground(Color.white);
+			tmp.setOpaque(true);
+			tmp.setBackground(Color.black);
+			tmp.setBorder(new LineBorder(Color.white, 3));
+		}
+		return tmp;
+	}
+
 	class MyKeyEvent extends KeyAdapter { // 동시 입력 시 끊김 동시입력 연구 필요
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
@@ -284,6 +347,5 @@ public class GameFrame extends JFrame {
 	public static void main(String[] args) {
 		GameFrame game = new GameFrame();
 		game.gameRun();
-
 	}
 }

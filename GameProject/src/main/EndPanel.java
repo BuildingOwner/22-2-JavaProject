@@ -27,28 +27,20 @@ public class EndPanel extends JPanel {
 		this.gf = gf;
 		this.setLayout(null);
 
-		end = new JLabel("게임 오버");
-		end.setBounds(360, 290, 270, 60);
-		Font font = new Font("", Font.BOLD, 60);
-		end.setFont(font);
-		end.setOpaque(true);
-		end.setBackground(Color.white);
+		end = gf.mkLabel("게임 오버", 60);
+		end.setBounds(360, 260, 280, 60);
 		this.add(end);
 
-		score = new JLabel("내 점수 : " + Integer.toString(gf.stage - 1) + "층");
-		score.setBounds(410, 335, 180, 50);
-		font = new Font("", Font.PLAIN, 30);
-		score.setFont(font);
-		score.setOpaque(true);
-		score.setBackground(Color.white);
+		score = gf.mkLabel("내 점수 : " + Integer.toString(gf.stage - 1) + "층", 30);
+		score.setBounds(410, 345, 190, 50);
 		this.add(score);
 
-		home = new JButton("홈으로 돌아가기");
+		home = gf.createBtn("홈으로 돌아가기");
 		home.setBounds(750, 600, 200, 50);
 		HomeBtnAction btn = new HomeBtnAction();
 		home.addActionListener(btn);
 		this.add(home);
-		
+
 		this.add(gf.backgrounds[10]);
 
 	}

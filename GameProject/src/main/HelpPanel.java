@@ -20,19 +20,15 @@ public class HelpPanel extends JPanel {
 
 		this.gf = gameF;
 
-		title = new JLabel("조작 방법");
+		title = gf.mkLabel("도움말", 50);
 		title.setBounds(390, 100, 230, 100);
-		Font font = new Font("", Font.BOLD, 50);
-		title.setFont(font);
-		title.setOpaque(true);
-		title.setBackground(Color.white);
 
-		discript = new JLabel("<html>A키를 눌러 공격<br>D키를 눌러 방어<br>화살표를 눌러 피하세요.</html>");
+		discript = gf.mkLabel(
+				"<html>" + "A키를 눌러 공격하세요.<br>" + "Q, W, E, R키를 눌러 스킬을 사용하세요.<br>" + "화살표를 좌우를 눌러 피하세요." + "</html>",
+				20);
 		discript.setBounds(300, 250, 400, 200);
-		discript.setOpaque(true);
-		discript.setBackground(Color.white);
 
-		home = new JButton("홈으로 돌아가기");
+		home = gf.createBtn("홈으로 돌아가기");
 		home.setBounds(750, 600, 200, 50);
 		HPBtnAction btn = new HPBtnAction();
 		home.addActionListener(btn);

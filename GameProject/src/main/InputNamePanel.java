@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 public class InputNamePanel extends JPanel {
 	private JLabel title;
@@ -21,17 +22,18 @@ public class InputNamePanel extends JPanel {
 		this.setLayout(null);
 		this.gf = gameF;
 
-		this.title = new JLabel("이름을 입력하세요");
-		title.setFont(new Font("", Font.PLAIN, 40));
-		title.setBounds(330, 200, 335, 70);
-		title.setOpaque(true);
-		title.setBackground(Color.white);
-		
-		this.nameField = new JTextField(12); // 이름 글자 수 제한 구현 하기
-		nameField.setBounds(380, 300, 150, 30);
-		this.submitBtn = new JButton("저장");
-		submitBtn.setBounds(550, 300, 60, 30);
+		this.title = gf.mkLabel("이름을 입력하세요", 40);
+		title.setBounds(320, 230, 350, 70);
 
+		this.nameField = new JTextField(12);
+		nameField.setBounds(380, 340, 150, 30);
+		nameField.setForeground(Color.white);
+		nameField.setOpaque(true);
+		nameField.setBackground(Color.black);
+		nameField.setBorder(new LineBorder(Color.white, 3));
+
+		this.submitBtn = gf.createBtn("저장");
+		submitBtn.setBounds(550, 340, 60, 30);
 		submitBtn.addActionListener(new SubmitBtnAction());
 
 		this.add(title);
@@ -42,7 +44,6 @@ public class InputNamePanel extends JPanel {
 	}
 
 	public String getName() {
-
 		if (name != null)
 			return name;
 		else

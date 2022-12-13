@@ -12,11 +12,21 @@ public class Item {
 	public int coolTime = 0;
 	public JLabel image;
 	public Image imageItem;
+	public int amount;
+	public int type; // 0:공격, 1:방어, 2:포션
 
 	public Item(Item t, int power) {
 		this.name = t.name;
 		this.power = power;
 		this.remain = t.remain;
+		this.type = 0;
+		this.setImage();
+	}
+
+	public Item(Item t, int amount, int type) {
+		this.name = t.name;
+		this.amount = amount;
+		this.type = type;
 		this.setImage();
 	}
 

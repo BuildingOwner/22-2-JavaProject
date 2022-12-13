@@ -55,7 +55,7 @@ public class SaveDataPanel extends JPanel {
 				for (int j = 0; j < 4; j++) {
 					try {
 						items[i][j] = gf.itemP.returnItem(sc.next(), sc.nextInt());
-						tl = gf.mkLabel(items[i][j].name + Integer.toString(items[i][j].power), 0);
+						tl = gf.mkLabel(items[i][j].name + " " + Integer.toString(items[i][j].power), 0);
 						tl.setBounds(10 + (j * 95), 30, 90, 20);
 						tp.add(tl);
 					} catch (NoSuchElementException e) {

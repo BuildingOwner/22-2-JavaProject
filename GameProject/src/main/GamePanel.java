@@ -80,19 +80,20 @@ public class GamePanel extends JPanel {
 	}
 
 	public void infoDraw(Graphics g) { // 스테이지, 플레이어, 몬스터 이름 출력
-		Graphics2D g2 = (Graphics2D) g;
 		g.setColor(Color.black);
-		g.fillRoundRect(420, 20, 158, 40, 5, 5);
+		g.fillRoundRect(420 - ((stage.length() % 5) * 10), 20, 30 * stage.length() - ((stage.length() % 5) * 13), 40, 5,
+				5);
 		g.setColor(Color.white);
-		drawThickRect(g, 420, 20, 158, 40, 4, true);
+		drawThickRect(g, 420 - ((stage.length() % 5) * 10), 20, 30 * stage.length() - ((stage.length() % 5) * 13), 40,
+				4, true);
 		g.setFont(new Font("", Font.BOLD, 30));
-		g.drawString(stage, 430, 50);
+		g.drawString(stage, 425 - ((stage.length() % 5) * 10), 50);
 		g.setFont(new Font("", Font.BOLD, 20));
-		drawThickRect(g, 20, 80, 13*playerName.length(), 30, 4, true);
-		drawThickRect(g, 940 - (monsterName.length() * 10), 80, 13*monsterName.length(), 30, 4, true);
+		drawThickRect(g, 20, 80, 13 * playerName.length(), 30, 4, true);
+		drawThickRect(g, 940 - (monsterName.length() * 10), 80, 13 * monsterName.length(), 30, 4, true);
 		g.setColor(Color.black);
-		g.fillRoundRect(20, 80, 13*playerName.length(), 30, 5, 5);
-		g.fillRoundRect(940 - (monsterName.length() * 10), 80, 13*monsterName.length(), 30, 5, 5);
+		g.fillRoundRect(20, 80, 13 * playerName.length(), 30, 5, 5);
+		g.fillRoundRect(940 - (monsterName.length() * 10), 80, 13 * monsterName.length(), 30, 5, 5);
 		g.setColor(Color.white);
 		g.drawString(playerName, 22, 100);
 		g.drawString(monsterName, 942 - (monsterName.length() * 10), 100);

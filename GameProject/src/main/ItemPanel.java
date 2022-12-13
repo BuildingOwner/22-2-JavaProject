@@ -19,7 +19,7 @@ public class ItemPanel extends JPanel {
 	private JLabel title;
 	public JButton[] choose = new JButton[3];
 	public GameFrame gf;
-	public Item[] ksy = new Item[1]; // 나중에 아이템 수 만큼 늘릴 예정
+	public Item[] ksy = new Item[5]; // 나중에 아이템 수 만큼 늘릴 예정
 
 	public ItemPanel(GameFrame gf) {
 		this.setLayout(null);
@@ -32,12 +32,12 @@ public class ItemPanel extends JPanel {
 
 		int[] n = new int[3];
 		for (int i = 0; i < n.length; i++) {
-			n[i] = (int) (Math.random() * 1); // 아이템 수 만큼 늘려야 함
-//			for(int j=0; j<n.length; j++) {
-//				if(n[i] == n[j]) {
-//					i--;
-//				}
-//			}  아이템의 갯수가 3개 이상일때 가동
+			n[i] = (int) (Math.random() * 5); // 아이템 수 만큼 늘려야 함
+			for (int j = 0; j < i; j++) {
+				if (n[i] == n[j]) {
+					i--;
+				}
+			} // 아이템의 갯수가 3개 이상일때 가동
 		}
 
 		for (int i = 0; i < choose.length; i++) {
@@ -46,9 +46,15 @@ public class ItemPanel extends JPanel {
 			tp.setBackground(Color.black);
 			tp.add(new JLabel(ksy[n[i]].image.getIcon()));
 			tp.add(gf.mkLabel(ksy[n[i]].name, 30));
-			tp.add(gf.mkLabel(
-					"  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :" + Integer.toString(ksy[n[i]].remain),
-					0));
+			if (ksy[n[i]].type == 0) {
+				tp.add(gf.mkLabel("  공격력 :" + Integer.toString(ksy[n[i]].power) + "  재사용 대기시간 :"
+						+ Integer.toString(ksy[n[i]].remain), 0));
+			} else if (ksy[n[i]].type == 1) {
+				tp.add(gf.mkLabel("  방어력 :" + Integer.toString(ksy[n[i]].amount), 0));
+			} else {
+				tp.add(gf.mkLabel("  회복량 :" + Integer.toString(ksy[n[i]].amount), 0));
+			}
+
 			tp.setBounds(10, 10, 380, 110);
 			choose[i] = gf.createBtn("");
 			choose[i].setLayout(null);
@@ -70,9 +76,15 @@ public class ItemPanel extends JPanel {
 			for (int i = 0; i < ksy.length; i++) {
 				ksy[i] = new Item();
 				try {
+					int type = sc.nextInt();
 					ksy[i].name = sc.next();
-					ksy[i].power = sc.nextInt();
-					ksy[i].remain = sc.nextInt();
+					if (type == 0) {
+						ksy[i].power = sc.nextInt() * (1 + gf.stage / 10);
+						ksy[i].remain = sc.nextInt();
+					} else {
+						ksy[i].amount = sc.nextInt();
+					}
+					ksy[i].type = type;
 					ksy[i].setImage();
 				} catch (NoSuchElementException e) {
 
@@ -99,19 +111,29 @@ public class ItemPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
-			Item ksy2 = new Item(ksy[Integer.parseInt(btn.getName())], ksy[Integer.parseInt(btn.getName())].power);
-			if (gf.player.itemCnt >= 4) {
-				String input = JOptionPane.showInputDialog("아이템이 가득 찼습니다.\n아이템을 교체하시겠습니까?\n교체할 아이템 슬롯의\n번호를 입력해 주세요.",
-						"(1~4)");
-				if (input != null) {
-					gf.player.items[Integer.parseInt(input) - 1] = ksy2;
+			if (ksy[Integer.parseInt(btn.getName())].type == 0) {
+				Item ksy2 = new Item(ksy[Integer.parseInt(btn.getName())], ksy[Integer.parseInt(btn.getName())].power);
+				if (gf.player.itemCnt >= 4) {
+					String input = JOptionPane
+							.showInputDialog("아이템이 가득 찼습니다.\n아이템을 교체하시겠습니까?\n교체할 아이템 슬롯의\n번호를 입력해 주세요.", "(1~4)");
+					if (input != null) {
+						gf.player.items[Integer.parseInt(input) - 1] = ksy2;
+					}
+					gf.itemF.setVisible(false);
+					gf.nextStage();
+					return;
 				}
-				gf.itemF.setVisible(false);
-				gf.nextStage();
-				return;
+				gf.player.items[gf.player.itemCnt++] = ksy2;
+			} else if (ksy[Integer.parseInt(btn.getName())].type == 1) {
+				gf.player.armor += ksy[Integer.parseInt(btn.getName())].amount;
+			} else {
+				gf.player.hp += ksy[Integer.parseInt(btn.getName())].amount;
+				if (gf.player.hp > 100) {
+					gf.player.hp = 100;
+				}
 			}
-			gf.player.items[gf.player.itemCnt++] = ksy2;
-			gf.itemF.setVisible(false);
+
+			gf.itemF.dispose();
 			gf.nextStage();
 			gf.flag = true;
 		}

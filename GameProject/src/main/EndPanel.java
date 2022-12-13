@@ -28,11 +28,12 @@ public class EndPanel extends JPanel {
 		this.setLayout(null);
 
 		end = gf.mkLabel("게임 오버", 60);
-		end.setBounds(360, 260, 280, 60);
+		end.setBounds(360, 260, 280, 70);
 		this.add(end);
 
 		score = gf.mkLabel("내 점수 : " + Integer.toString(gf.stage - 1) + "층", 30);
-		score.setBounds(410, 345, 190, 50);
+		int len = score.getText().length();
+		score.setBounds(360, 345, 280, 50);
 		this.add(score);
 
 		home = gf.createBtn("홈으로 돌아가기");

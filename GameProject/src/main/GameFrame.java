@@ -28,7 +28,7 @@ public class GameFrame extends JFrame {
 	public InputNamePanel nameP;
 	public ItemPanel itemP;
 	public GamePanel gameP;
-	public JFrame itemF = new JFrame();
+	public JFrame itemF;
 	public GameFrame gf = this;
 	public ImageIcon[] screenImage = new ImageIcon[12];
 	public JLabel[] backgrounds = new JLabel[12];
@@ -65,7 +65,7 @@ public class GameFrame extends JFrame {
 	}
 
 	public void game(String userName, Item[] items) {
-		stage = 1;
+		stage = 100;
 		player = new Player(this, 100, 1, 0, "");
 		player.name = userName;
 		player.items = items;
@@ -78,7 +78,7 @@ public class GameFrame extends JFrame {
 
 		gameP = new GamePanel(this, items);
 		gameP.stage += stage;
-
+		gameP.repaint();
 		redraw(gameP);
 		this.addKeyListener(new MyKeyEvent());
 		this.setFocusable(true);
@@ -95,6 +95,7 @@ public class GameFrame extends JFrame {
 			try {
 				System.out.println(flag);
 				if (flag) {
+//					end = true;
 					System.out.printf("frame : %d sync : %d %d motion : %d %d\n", fc.frame, fc.pSync, fc.mSync,
 							fc.pMotion, fc.mMotion);
 
@@ -169,24 +170,23 @@ public class GameFrame extends JFrame {
 					}
 
 					// debug : 게임 종료
-					if (stage > 3) {
+					if (stage > 10000) {
 						end = true;
-					} else {
-						// 몬스터 사망시 아이템 획득
-						try {
-							if (monster.hp <= 0) {
-								flag = false;
-								fc.interrupt();
-								monster.hp = 100;
-								itemF.setDefaultCloseOperation(EXIT_ON_CLOSE);
-								itemF.setBounds(450, 150, 700, 600);
-								itemP = new ItemPanel(this);
-								itemF.add(itemP);
-								itemF.setVisible(true);
-							}
-						} catch (NullPointerException e) {
-
+					}
+					// 몬스터 사망시 아이템 획득
+					try {
+						if (monster.hp <= 0) {
+							flag = false;
+							fc.interrupt();
+							monster.hp = 100;
+							itemF = new JFrame();
+							itemF.setDefaultCloseOperation(EXIT_ON_CLOSE);
+							itemF.setBounds(450, 150, 700, 600);
+							itemF.add(new ItemPanel(this));
+							itemF.setVisible(true);
 						}
+					} catch (NullPointerException e) {
+
 					}
 
 					if (player.hp <= 0) {
@@ -197,6 +197,7 @@ public class GameFrame extends JFrame {
 
 			}
 
+			// 게임 종료
 			if (end) {
 				flag = false;
 				end = false;

@@ -28,7 +28,6 @@ public class SaveDataPanel extends JPanel {
 
 	public SaveDataPanel(GameFrame gameF) {
 		this.setLayout(null);
-
 		this.gf = gameF;
 
 		title = gf.mkLabel("저장하기", 50);
@@ -105,6 +104,8 @@ public class SaveDataPanel extends JPanel {
 			if (btn.getText().equals("홈으로 돌아가기")) {
 				gf.redraw(gf.startP);
 			}
+			GamePanel.mainbg.stop();
+			StartPanel.stbg.start();
 		}
 	}
 
@@ -126,7 +127,6 @@ public class SaveDataPanel extends JPanel {
 							Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
 							m.setVisible(true);
 							gf.redraw(gf.startP);
-							StartPanel.stbg.start();
 						} else {
 							int confirm = JOptionPane.showConfirmDialog(null, "덮어 씌우겠습니까?", "경고",
 									JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -139,11 +139,11 @@ public class SaveDataPanel extends JPanel {
 								Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
 								m.setVisible(true);
 								gf.redraw(gf.startP);
-								StartPanel.stbg.start();
 							}
-							
 						}
 						bw.close();
+						GamePanel.mainbg.stop();
+						StartPanel.stbg.start();
 					} catch (IOException e1) {
 
 					}

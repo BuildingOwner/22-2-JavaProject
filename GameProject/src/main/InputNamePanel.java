@@ -68,6 +68,7 @@ public class InputNamePanel extends JPanel {
 					for (int i = 0; i < 4; i++) {
 						items[i] = new Item();
 					}
+					StartPanel.stbg.stop();
 					gf.game(userName, items);
 				}
 			}

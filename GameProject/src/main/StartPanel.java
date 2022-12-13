@@ -55,16 +55,12 @@ public class StartPanel extends JPanel {
 			JButton btn = (JButton) e.getSource();
 			if (btn.getText().equals("도움말")) {
 				gf.redraw(gf.helpP);
-				stbg.stop();
 			} else if (btn.getText().equals("이어 하기")) {
 				gf.saveP = new SavePanel(gf);
 				gf.redraw(gf.saveP);
-				stbg.stop();
 			} else {
 				gf.nameP = new InputNamePanel(gf);
 				gf.redraw(gf.nameP);
-				stbg.stop();
-
 			}
 
 		}

@@ -69,7 +69,9 @@ public class SavePanel extends JPanel {
 				for (int j = 0; j < 4; j++) {
 					items[i][j] = new Item();
 				}
-				tp.add(gf.mkLabel("저장된 파일이 없습니다.", 0));
+				JLabel tl = gf.mkLabel("저장된 파일이 없습니다.", 0);
+				tl.setBounds(110, 15, 180, 20);
+				tp.add(tl);
 			}
 			saves[i].setLayout(null);
 			tp.setOpaque(true);
@@ -102,7 +104,6 @@ public class SavePanel extends JPanel {
 
 			if (btn.getText().equals("홈으로 돌아가기")) {
 				gf.redraw(gf.startP);
-				StartPanel.stbg.start();
 			}
 		}
 	}
@@ -119,6 +120,7 @@ public class SavePanel extends JPanel {
 						alert = new Modal(gf, "저장된 파일이 없습니다.", "경고");
 						alert.setVisible(true);
 					} else {
+						StartPanel.stbg.stop();
 						gf.game(userName[i], items[i]);
 					}
 				}

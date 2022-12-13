@@ -63,7 +63,6 @@ public class PausePanel extends JPanel {
 
 			if (btn.getText().equals("저장하고 나가기")) {
 				gf.redraw(new SaveDataPanel(gf));
-				GamePanel.mainbg.stop();
 			}
 		}
 	}

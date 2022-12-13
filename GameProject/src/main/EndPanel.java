@@ -34,7 +34,7 @@ public class EndPanel extends JPanel {
 		end.setBounds(360, 260, 280, 70);
 		this.add(end);
 
-		score = gf.mkLabel("내 점수 : " + Integer.toString(gf.stage - 1) + "층", 30);
+		score = gf.mkLabel("내 점수 : " + Integer.toString(gf.stage) + "층", 30);
 		int len = score.getText().length();
 		score.setBounds(360, 345, 280, 50);
 		this.add(score);

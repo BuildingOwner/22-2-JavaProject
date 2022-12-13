@@ -10,7 +10,8 @@ public class Monster extends GameObject {
 	public int paturn = 1;
 	public JLabel warning;
 	public ImageIcon[] color = new ImageIcon[2];
-
+	public Audio Attack = new Audio("audio/monsterAttack.wav", false,-3);
+	
 	public Monster(int hp, int damage, int armor, String name, int n) {
 		super(hp, damage, armor, name);
 		// 몬스터 이미지 초기화
@@ -19,10 +20,10 @@ public class Monster extends GameObject {
 		this.setImage[2] = new ImageIcon("images/monster" + n + "Attacked.png");
 		for (int i = 0; i < 3; i++) {
 			Image tmp = this.setImage[i].getImage();
-			Image tmp2 = tmp.getScaledInstance(330, 330, Image.SCALE_SMOOTH);
+			Image tmp2 = tmp.getScaledInstance(340, 340, Image.SCALE_SMOOTH);
 			this.setImage[i] = new ImageIcon(tmp2);
 			this.images[i] = new JLabel(this.setImage[i]);
-			this.images[i].setBounds(335, 190, 330, 330);
+			this.images[i].setBounds(330, 200, 340, 340);
 		}
 		this.nowImage = this.images[0];
 
@@ -40,6 +41,7 @@ public class Monster extends GameObject {
 
 	@Override
 	void attack() {
+		Attack.start();
 		int t = (int) (Math.random() * 3 + 1);
 		warningPos(t);
 		warning.setIcon(color[0]);

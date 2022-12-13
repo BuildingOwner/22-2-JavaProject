@@ -10,7 +10,9 @@ public class Player extends GameObject {
 	Item[] items = new Item[4];
 	int itemCnt = 0;
 	GameFrame gf;
-	public Audio punch = new Audio("audio/punch.wav", false);
+	public Audio punch = new Audio("audio/punch.wav", false,-2);
+	public Audio skill = new Audio("audio/sword.wav", false,-6);
+	public Audio skill2 = new Audio("audio/staff.wav", false,-5);
 
 	int lp;
 	int rp;
@@ -24,10 +26,10 @@ public class Player extends GameObject {
 		this.setImage[2] = new ImageIcon("images/playerAttacked.png");
 		for (int i = 0; i < 3; i++) {
 			Image tmp = this.setImage[i].getImage();
-			Image tmp2 = tmp.getScaledInstance(140, 210, Image.SCALE_SMOOTH);
+			Image tmp2 = tmp.getScaledInstance(195, 270, Image.SCALE_SMOOTH);
 			this.setImage[i] = new ImageIcon(tmp2);
 			this.images[i] = new JLabel(this.setImage[i]);
-			this.images[i].setBounds(430, 400, 140, 210);
+			this.images[i].setBounds(402, 395, 195, 270);
 		}
 		this.nowImage = this.images[0];
 		lp = nowImage.getX();
@@ -54,6 +56,8 @@ public class Player extends GameObject {
 		if (a.name == null || gf.player.attack || a.coolTime > 0) {
 			return;
 		}
+		if (a.name.equals("검(불)") || a.name.equals("검(번개)")) skill.start();
+		else skill2.start();
 		a.coolTime = a.remain;
 		gf.player.nowImage.setIcon(gf.player.setImage[1]);
 		gf.monster.hp = gf.monster.hp - a.power;

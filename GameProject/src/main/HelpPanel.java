@@ -46,6 +46,7 @@ public class HelpPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			if (btn.getText().equals("홈으로 돌아가기")) {
+				StartPanel.stbg.start();
 				gf.getContentPane().removeAll();
 				gf.add(gf.startP);
 				gf.revalidate();

@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -13,12 +14,16 @@ public class Audio {
 	private Clip clip;
 	private boolean loop;
 
-	public Audio(String pathName, boolean loop) {
+	public Audio(String pathName, boolean loop, int volume) {
 		try {
 			clip = AudioSystem.getClip(); // 비어있는 오디오 클립 만들기
 			File audioFile = new File(pathName); // 오디오 파일의 경로명
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile); // 오디오 파일로부터
 			clip.open(audioStream); // 재생할 오디오 스트림 열기
+			
+			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			
+			gainControl.setValue(volume);
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {

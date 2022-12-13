@@ -102,6 +102,7 @@ public class SavePanel extends JPanel {
 
 			if (btn.getText().equals("홈으로 돌아가기")) {
 				gf.redraw(gf.startP);
+				StartPanel.stbg.start();
 			}
 		}
 	}

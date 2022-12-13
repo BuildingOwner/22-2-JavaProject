@@ -20,16 +20,18 @@ public class ItemPanel extends JPanel {
 	public JButton[] choose = new JButton[3];
 	public GameFrame gf;
 	public Item[] ksy = new Item[5]; // 나중에 아이템 수 만큼 늘릴 예정
-
+	public Audio itemget = new Audio("audio/itemget.wav", false,-13);
+	public Audio shield = new Audio("audio/shield.wav", false,-3);
+	public Audio heal = new Audio("audio/heal.wav", false,-8);
+	public Audio select = new Audio("audio/select.wav", false,-10);
+	
 	public ItemPanel(GameFrame gf) {
 		this.setLayout(null);
 		this.gf = gf;
 		initItem();
-
 		title = gf.mkLabel("전리품 획득!", 50);
 		title.setBounds(175, 30, 340, 70);
 		this.add(title);
-
 		int[] n = new int[3];
 		for (int i = 0; i < n.length; i++) {
 			n[i] = (int) (Math.random() * 5); // 아이템 수 만큼 늘려야 함
@@ -39,7 +41,7 @@ public class ItemPanel extends JPanel {
 				}
 			} // 아이템의 갯수가 3개 이상일때 가동
 		}
-
+		
 		for (int i = 0; i < choose.length; i++) {
 			JPanel tp = new JPanel();
 			tp.setOpaque(true);
@@ -64,6 +66,7 @@ public class ItemPanel extends JPanel {
 			choose[i].setBounds(140, 120 + i * 140, 400, 130);
 			this.add(choose[i]);
 		}
+		itemget.start(); //게임 켤 때도 남
 		this.add(gf.backgrounds[11]);
 	}
 
@@ -123,10 +126,13 @@ public class ItemPanel extends JPanel {
 					gf.nextStage();
 					return;
 				}
+				select.start();
 				gf.player.items[gf.player.itemCnt++] = ksy2;
 			} else if (ksy[Integer.parseInt(btn.getName())].type == 1) {
+				shield.start();
 				gf.player.armor += ksy[Integer.parseInt(btn.getName())].amount;
 			} else {
+				heal.start();
 				gf.player.hp += ksy[Integer.parseInt(btn.getName())].amount;
 				if (gf.player.hp > 100) {
 					gf.player.hp = 100;

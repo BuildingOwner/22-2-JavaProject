@@ -15,6 +15,7 @@ public class StartPanel extends JPanel {
 	private JLabel background;
 	public JButton[] button = new JButton[3];
 	public GameFrame gf;
+	public static Audio stbg = new Audio("audio/stbg.wav", true, -10);
 
 	public StartPanel(GameFrame gameF) {
 		this.setLayout(null);
@@ -42,7 +43,7 @@ public class StartPanel extends JPanel {
 			button[i].addActionListener(btn);
 			this.add(button[i]);
 		}
-
+		stbg.start();
 		this.add(gf.backgrounds[0]);
 
 	}
@@ -54,12 +55,15 @@ public class StartPanel extends JPanel {
 			JButton btn = (JButton) e.getSource();
 			if (btn.getText().equals("도움말")) {
 				gf.redraw(gf.helpP);
+				stbg.stop();
 			} else if (btn.getText().equals("이어 하기")) {
 				gf.saveP = new SavePanel(gf);
 				gf.redraw(gf.saveP);
+				stbg.stop();
 			} else {
 				gf.nameP = new InputNamePanel(gf);
 				gf.redraw(gf.nameP);
+				stbg.stop();
 
 			}
 

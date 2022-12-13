@@ -32,6 +32,7 @@ public class GameFrame extends JFrame {
 	public GameFrame gf = this;
 	public ImageIcon[] screenImage = new ImageIcon[12];
 	public JLabel[] backgrounds = new JLabel[12];
+	
 	Player player;
 	Monster monster;
 	FrameCount fc;

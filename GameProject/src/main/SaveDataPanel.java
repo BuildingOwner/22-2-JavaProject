@@ -126,6 +126,7 @@ public class SaveDataPanel extends JPanel {
 							Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
 							m.setVisible(true);
 							gf.redraw(gf.startP);
+							StartPanel.stbg.start();
 						} else {
 							int confirm = JOptionPane.showConfirmDialog(null, "덮어 씌우겠습니까?", "경고",
 									JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -138,7 +139,9 @@ public class SaveDataPanel extends JPanel {
 								Modal m = new Modal(gf, "저장이 완료되었습니다.", "저장");
 								m.setVisible(true);
 								gf.redraw(gf.startP);
+								StartPanel.stbg.start();
 							}
+							
 						}
 						bw.close();
 					} catch (IOException e1) {

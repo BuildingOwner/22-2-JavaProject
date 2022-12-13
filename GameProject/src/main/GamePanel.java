@@ -16,7 +16,8 @@ public class GamePanel extends JPanel {
 	GameFrame gf;
 	public JLabel[] cl = new JLabel[4];
 	private JLabel[] skillKey = new JLabel[4];
-
+	public static Audio mainbg = new Audio("audio/mainbg.wav", true,-10);
+	
 	String stage = "스테이지";
 	String playerName = "나";
 	String monsterName = "몬스터";
@@ -24,6 +25,7 @@ public class GamePanel extends JPanel {
 	Image[] playerItem = new Image[4];
 
 	public GamePanel(GameFrame gf, Item[] items) {
+		mainbg.start();
 		this.setLayout(null);
 		this.gf = gf;
 		this.playerName = gf.player.name;

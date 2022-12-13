@@ -57,10 +57,13 @@ public class PausePanel extends JPanel {
 			if (btn.getText().equals("홈으로 돌아가기")) {
 				gf.stage = 1;
 				gf.redraw(gf.startP);
+				GamePanel.mainbg.stop();
+				StartPanel.stbg.start();
 			}
 
 			if (btn.getText().equals("저장하고 나가기")) {
 				gf.redraw(new SaveDataPanel(gf));
+				GamePanel.mainbg.stop();
 			}
 		}
 	}

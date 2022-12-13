@@ -22,8 +22,11 @@ public class EndPanel extends JPanel {
 	private JLabel score;
 	private JButton home;
 	GameFrame gf;
-
+	public Audio gameover = new Audio("audio/gameover.wav", false,-10);
+	
 	public EndPanel(GameFrame gf) {
+		GamePanel.mainbg.stop();
+		gameover.start();
 		this.gf = gf;
 		this.setLayout(null);
 
@@ -54,6 +57,7 @@ public class EndPanel extends JPanel {
 
 			if (btn.getText().equals("홈으로 돌아가기")) {
 				gf.redraw(gf.startP);
+				StartPanel.stbg.start();
 			}
 		}
 	}

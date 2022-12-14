@@ -58,7 +58,7 @@ public class SavePanel extends JPanel {
 					} catch (NoSuchElementException e) {
 						items[i][j] = new Item();
 						tl = gf.mkLabel(" 아이템 없음 ", 0);
-						tl.setBounds(10 + (j * 95), 30, 90, 20);
+						tl.setBounds(5 + (j * 95), 30, 100, 20);
 						tp.add(tl);
 					}
 

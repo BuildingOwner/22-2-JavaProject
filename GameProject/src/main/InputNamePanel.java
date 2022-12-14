@@ -23,7 +23,7 @@ public class InputNamePanel extends JPanel {
 		this.gf = gameF;
 
 		this.title = gf.mkLabel("이름을 입력하세요", 40);
-		title.setBounds(320, 230, 350, 70);
+		title.setBounds(315, 230, 360, 70);
 
 		this.nameField = new JTextField(12);
 		nameField.setBounds(380, 340, 150, 30);

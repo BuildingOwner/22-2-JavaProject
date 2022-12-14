@@ -66,7 +66,7 @@ public class GameFrame extends JFrame {
 	}
 
 	public void game(String userName, Item[] items) {
-		stage = 100;
+		stage = 1;
 		player = new Player(this, 100, 1, 0, "");
 		player.name = userName;
 		player.items = items;
@@ -228,7 +228,7 @@ public class GameFrame extends JFrame {
 			break;
 		}
 
-		return new Monster(50 * stage, stage * 2, stage, name, i);
+		return new Monster(50 * stage, stage * 2, 0, name, i);
 	}
 
 	public void redraw(JPanel p) {
@@ -240,6 +240,7 @@ public class GameFrame extends JFrame {
 
 	public void nextStage() {
 		stage++;
+		player.damage += 4;
 		monster = createMonster();
 		gameP = new GamePanel(this, player.items);
 		gameP.stage = "스테이지" + stage;

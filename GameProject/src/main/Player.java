@@ -49,7 +49,7 @@ public class Player extends GameObject {
 		gf.gameP.repaint();
 
 		// debug : 한대만 쳐도 몬스터 죽음
-		gf.monster.hp = 0;
+//		gf.monster.hp = 0;
 	}
 
 	void skill(Item a) {
